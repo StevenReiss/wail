@@ -1,0 +1,43 @@
+<BODY>
+        <H1>Quick Web Page Design Example</H1>
+        <DIV class='lessontask'>
+        <P>
+Peter's Pasta Parlor needs an ordering web page.  The customer should be able to use the web page to create
+their own pasta dish which will then be made to order.  Customers should be able to choose among different types
+of pasta (e.g. spaghetti, macaroni, rigatoni, ravioli, tagliatelle, penne, ...), different types of sauces 
+(e.g. peto, alfredo, marinara, vodka, arabbiata, ...), and different types of toppings (e.g. sausage, meatballs,
+veggie balls, baby mozzarella, tomatos, peppers, shrimp, ...).
+        </P>
+        <P>
+Your job is to sketch out a web page for this purpose.  This can be done on paper or you can use a tool 
+such as adobe XD, figma, photoshop, etc.  But you only have a limited amount of time (5-10 minutes), so 
+we are looking for just an outline of what you are thinking of.             
+        </P>
+        <P>
+ When you are done you should upload your design.  If you use paper, then take a picture (or scan it) to
+ produce an appropriate image.  Please convert all designs to PDF before uploading.                 
+        </P>
+        </DIV>
+        <BR>
+        <DIV class='lessoninput'>
+             <FORM id='design1form' method='POST' action='/lesson/{{lesson_id}}/action/upload'
+                        enctype='multipart/form-data'>
+                     <INPUT id='design1file' name='designfile' type='file'  accept='application/pdf' />
+                     <BR>
+                     <SPAN id='design1error' class='error hidden'>Bad Id</SPAN>
+                     <BR>
+                     <INPUT id='designsubmit' type='submit' value='Submit' />
+             </FORM>   
+        </DIV>
+
+
+<SCRIPT>
+
+$(function() {
+   $("#design1form").submit(event => handleDesignSubmit(event,'design1file','design1error')); 
+});
+
+
+
+</SCRIPT>        
+</BODY>

@@ -1,0 +1,44 @@
+<BODY class='loginbody'>
+
+<H1 class='pagetitle'>CSCI1320 Interactive Lesson Login Page</H1>
+
+<DIV class='info'>
+   <P>
+This application provides interactive (in-class) activities for CSCI1320,
+Creating Modern Web and Mobile Applications.  These are intended to be used as
+part of the upcoming on-line lectures.
+   </P>
+   <P>
+We are asking students to provide their Banner ID here so we can track
+submitted documents and make sure that, if you are asked to review a document,
+you are not asked to review your own, and so that we can send reviews back to
+the correct student.
+   </P>
+<DIV>
+
+<DIV class='loginform'>
+   <FORM id='useridform' >
+      <LABEL class='inputlabel'>Banner ID / Login Name: </LABEL>
+      <INPUT id='loginid' type='text' placeholder='Enter banner id' value='{{ user.bannerid }}'/>
+      <BR>
+         <INPUT class='hidden' id='loginpwd' type='password' placeholder='Enter admin password' />
+      <BR>
+         <SPAN id='loginError' class='error hidden'>Bad Id</SPAN> 
+      <BR>
+      <INPUT id='loginsubmit' type='submit' value='Proceed' />
+   </FORM>
+</DIV>
+
+<SCRIPT>
+
+$(function() {
+   $("#loginid").on('keyup',handleLoginEnter);  
+   $("#loginpwd").keyup(event => handleLoginEnter(event));
+   $("#useridform").submit(event => handleLoginSubmit(event)); 
+});
+
+
+
+</SCRIPT>
+</BODY>
+

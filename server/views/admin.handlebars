@@ -1,0 +1,50 @@
+<BODY>
+
+<H1>Administration Page for WAIL</H1>
+<H2>Actions for existing Lessons</H2>
+<DIV class='admin1'>
+   <FORM id='adminform' action='/admin/action/update' method='post'>
+      Lesson: <SELECT id='lessonchoice' name='lesson'>
+              {{#lessons}}
+              <OPTION value='{{id}}'>{{name}}</OPTION>
+              {{/lessons}}
+      </SELECT>
+      &nbsp;&nbsp;Action: 
+      <SELECT id='lessonaction' name='action'>
+              <OPTION value='ENABLE'>ENABLE</OPTION>
+              <OPTION value='DISABLE'>DISABLE</OPTION>
+              <OPTION value='INITIALIZE'>INITIALIZE</OPTION>
+      </SELECT>
+      <br>
+      <INPUT id='adminsubmit' type='submit' value='Do Action' />
+   </FORM>
+</DIV>
+<BR>
+<H2>Create a new lesson</H2>
+<DIV class='admin2'>
+   <FORM id='newlesson' action='/admin/action/new' method='post'>
+      <LABEL class='newlabel'>Id:</LABEL>
+      <INPUT type='text' id='newid'/>
+      <BR>     
+      <LABEL class='newlabel'>Name:</LABEL>
+      <INPUT type='text' id='newname'/>
+      <BR>
+      <LABEL class='newlabel'>Description:</LABEL> 
+      <INPUT type='text' id='newdesc'/>
+      <BR>
+      <LABEL class='newlabel'>Module:</LABEL>
+      <INPUT type='text' id='newmodule'/>
+      <BR>
+      <LABEL class='newlabel'>Reference Lesson:</LABEL>
+      <INPUT type='text' id='newref'/>
+      <BR>
+
+      <INPUT id='newsubmit' type='submit' value='Add Lesson' />
+   </FORM>
+</DIV>
+<BR>
+<H2>Log Out</H2>
+<DIV class='admin3'>
+<A href='/home'>Log Out of Admin</A>
+</DIV>
+</BODY>

@@ -1,0 +1,26 @@
+<BODY>
+        <H1>Feedback on Your Design</H1>
+
+        <DIV class='lessontask'>
+                <P>
+ To get the feedback that has been posted on your design push the UPDATE button.  
+ Any feedback that is then available will be shown below.                       
+                </P>
+        </DIV>
+        <DIV class='lessoninput'>
+                <BR>
+                <INPUT id='feedbackrequest' type='button' value="UPDATE" />
+        </DIV>
+        <DIV class='lessondata'>
+          <H2>Feedback:</H2>  
+          <DIV class='feedbackdata' id='feedbacktext'></DIV>   
+        </DIV>
+
+<SCRIPT>
+
+ $(function() {
+    $("#feebackrequest").click(evt => { handleFeedbackRequest({{lesson_id}},'feedbacktext'); } );   
+ });   
+
+</SCRIPT>        
+</BODY>

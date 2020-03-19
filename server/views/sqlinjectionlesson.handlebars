@@ -1,0 +1,72 @@
+<BODY>
+  <H1>SQL Injection Example</H1>      
+  <DIV class='lessontask'>
+          <P>
+This lesson shows you how simple it is for an intruder to use SQL Injection
+to break your server.  
+<P>
+Below there is a sample login page.  The back end code takes the input,
+and uses a SQL query to check if there is a database row with the corresponding
+name and password.  To keep things simple we have not encrypted the passwords
+as would normally be done.  We are also returning the results of the query
+to help you try another time.  If you feel this is too easy, try it without setting
+the password field.  (This is equivalent to having encrypted passwords.)
+</P>
+<P>
+You should enter login and password text that fools the query into accepting
+your login.  You can either do this directly or by finding a valid login and
+using it.
+</P>
+  </DIV>
+  <BR>
+  <DIV class='lessoninput'>
+          <FORM id='sqlinjectionform' method='POST'>
+          <LABEL class='inputlabel'>User Name: </LABEL>
+          <INPUT id='sqlinjectionuser' type='text' name='username' width='80' placeholder='enter user name'>
+          <BR>
+          <LABEL class='inputlabel'>Password:&nbsp; </LABEL>
+          <INPUT id='sqlinjectionpwd' type='text' name='password' width='80' placeholder='enter passowrd'>
+          <BR>
+          <INPUT id='sqlinjectionsubmit' type='submit' value='Try It'/>
+          </FORM>
+  </DIV>
+  <DIV class='lessondata'>
+         
+          <DIV id='resultfail' class='hidden'>
+                  <H3>Login Failed</H3>
+                  <BR>
+                  <DIV>
+                          <SPAN class='resultlabel'>REASON: </SPAN>
+                          <SPAN id='queryreason'></SPAN>
+                          <BR>
+                          <SPAN class='resultlabel'>QUERY: </SPAN>
+                          <SPAN id='queryinput'></SPAN>
+                          <BR>
+                          <SPAN class='resultlabel'>RESULT: </SPAN>
+                          <DIV id='queryresult'></DIV>
+                  </DIV>
+          </DIV>
+          <DIV id='resultsuccess' class='hidden'>
+                  <H3>Login Succeeded!!!</H3>
+                  <BR>
+                  <P>
+                          You successfully logged in as <span id='loginuser'></span>.
+                  </P>
+                  <P id='adminpriv' class='hidden'>And you have administrative privileges.</P>
+                  <BR>
+                  <FORM id='sqlinjectiondone' method='POST' action='/lesson/{{lesson_id}}/action/done'>
+                  <INPUT id='donesubmit' type='submit' value='Finished Lesson'>
+                  </FORM>
+          </DIV>
+  </DIV>
+
+
+<SCRIPT>
+
+$(function() {
+        $("#sqlinjectionform").submit( 
+                (event) => { handleSqlInjectionSubmit(event,'{{lesson_id}}'); } );
+});  
+
+</SCRIPT>  
+</BODY>

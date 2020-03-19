@@ -1,0 +1,50 @@
+<BODY id='crit1body'>
+        <H1>Quick Web Page Design Crits</H1>
+        <DIV class='lessontask'>
+                <P>
+In this lesson you will be give a (random) design from another student.  Your job is to
+provide constructive criticism on that design, comments that would be helpful to designer
+in eventually doing a redesign.                         
+                </P>
+                <P>
+Your comments should be constructive.  Don't be overly critical without being helpful.
+Remember that you will be getting comments as well.                        
+                </P>
+        </DIV>
+        <BR>
+        <DIV id='crits1getdesign' class='lessoninput'>
+                <FORM id='crits1req' method='POST' action='/lesson/{{lesson_id}}/action/getdesign'>
+                   <INPUT id='critssubmit' type='submit' value='Get Design' />
+                </FORM>
+                <BR>
+        </DIV>
+        <DIV id='crits1feedback' class='lessoninput'>
+                <FORM id='crits1res' method='POST' action='/lesson/{{lesson_id}}/action/critdesign'>
+                <INPUT id='critid' type='hidden' />
+                <INPUT id='critfile' type='hidden' />
+                <LABEL class='inputlabel'>What I like about the design:</LABEL>
+                <TEXTAREA id='crits1likes' name='likes' rows='10' cols='64'></TEXTAREA>
+                <BR>
+                <LABEL class='inputlabel'>What I dislike about the design:</LABEL>
+                <TEXTAREA id='crits1dislikes' name='dislikes' rows='10' cols='64'></TEXTAREA>
+                <BR>
+                <LABEL class='inputlabel'>How the design could be improved:</LABEL>
+                <TEXTAREA id='crits1improve' name='improve' rows='10' cols='64'></TEXTAREA>
+                <BR>
+                <INPUT type='submit' value='Submit Crits' />
+                </FORM>'
+        </DIV>
+        
+
+
+<SCRIPT>
+$(function() {
+    $("#crit1req").submit(event => handleCritsGetDesign(event,{{lesson_id}})); 
+    let s1 = new SimpleMDE( { element : document.getElementById("crits1likes")});
+    let s2 = new SimpleMDE( { element : document.getElementById("crits1dislikes")});
+    let s3 = new SimpleMDE( { element : document.getElementById("crits1improve")});
+});
+
+
+</SCRIPT>
+</BODY>
