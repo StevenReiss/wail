@@ -28,7 +28,8 @@ const adb = require('any-db');
 /*										*/
 /********************************************************************************/
 
-const pool = adb.createPool(config.DB_CONNECT,{ min : 1, max : 4 });
+const db_connect = config.dbConnect();
+const pool = adb.createPool(db_connect,{ min : 1, max : 4 });
 
 
 
@@ -74,7 +75,7 @@ function callback(next)
 
 function fixQuery(q)
 {
-   if (config.DB_CONNECT.substring(0,5) == "mysql") {
+   if (db_connect.substring(0,5) == "mysql") {
       q = q.replace(/\$\d+/g,"?");
     }
 

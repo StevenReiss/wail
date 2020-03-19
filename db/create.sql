@@ -43,9 +43,11 @@ CREATE TABLE lessons (
    PRIMARY KEY ( number )
 );
 CREATE INDEX lessonNameIndex on lessons(name);
-			
+		
 
 GRANT SELECT on wail.* to 'cs132'@'%';
+GRANT ALL on wail.* to 'wail'@'%';
+
 
 INSERT INTO admin (id, password)
 VALUES ( 'admin', 'cb7a5742346e1c8560443d0d9b4bb7e1d3426500709d924a2e9fa7dd36984907' ),

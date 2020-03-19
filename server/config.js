@@ -14,7 +14,7 @@
 /********************************************************************************/
 
 const sanitize_html = require('sanitize-html');
-
+const fs = require('fs');
 
 
 
@@ -33,9 +33,18 @@ const HOME_PAGE = '/home';
 
 
 const PORT = 5002;
-const DB_CONNECT = 'mysql://spr:feast2run@bdognom-v2.cs.brown.edu/wail';
+var   DB_CONNECT = 'mysql://wail:XXXXXX@bdognom-v2.cs.brown.edu/wail';
+const PWD_FILE = '/.wailpass';
 
-
+function dbConnect()
+{
+   let pwd = fs.readFileSync(__dirname + PWD_FILE);
+   pwd = pwd.toString().trim();
+   console.log("READ",pwd);
+   let conn = DB_CONNECT.replace("XXXXXX",pwd);
+   
+   return conn;
+}
 
 
 var ALLOWED_TAGS = [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a',
@@ -48,10 +57,6 @@ var ALLOWED_ATTRS = {
 	    img: [ 'src' ],
 	    span: [ 'style' ]
 	 }
-
-
-
-
 
 
 
@@ -98,9 +103,10 @@ exports.STATIC = STATIC;
 exports.SESSION_KEY = SESSION_KEY;
 exports.DEFAULT_PAGE = DEFAULT_PAGE;
 exports.HOME_PAGE = HOME_PAGE;
-exports.DB_CONNECT = DB_CONNECT;
+exports.dbConnect = dbConnect;
 
 exports.htmlSanitize = htmlSanitize;
+
 
 
 
