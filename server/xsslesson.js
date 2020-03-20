@@ -84,7 +84,7 @@ function handleAltPage(req,res,lesson)
 {
    let u = req.body.name;
    let s = req.body.secret;
-   let u = config.htmlSanitize(u);
+   u = config.htmlSanitize(u);
 
    let rdata = { user : u };
    lesson.showPage(req,res,'xssresult',rdata);
