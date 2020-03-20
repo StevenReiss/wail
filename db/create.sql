@@ -43,7 +43,7 @@ CREATE TABLE lessons (
    PRIMARY KEY ( number )
 );
 CREATE INDEX lessonNameIndex on lessons(name);
-		
+	
 
 GRANT SELECT on wail.* to 'cs132'@'%';
 GRANT ALL on wail.* to 'wail'@'%';
@@ -58,7 +58,8 @@ INSERT INTO lessons (name,id,module,reference,description)
 VALUES
    ("Design 1", "design1", "designlesson", NULL, "Quick Web Page Design Example" ),
    ("Crits 1", "crits1", "critslesson", "design1", "Crits on Quick Web Page Design Example" ),
-   ("SQL Injection", "sqlinjection", "sqlinjectionlesson", NULL, "SQL Injection Attacks" );
+   ("SQL Injection", "sqlinjection", "sqlinjectionlesson", NULL, "SQL Injection Attacks" ),
+   ("XSS Attack", "xss", "xsslesson", NULL, "Cross-Site Scripting Attacks" );
 
 
 UPDATE lessons set enabled = true WHERE name = 'Design 1';

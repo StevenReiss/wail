@@ -1,6 +1,6 @@
 /********************************************************************************/
 /*										*/
-/*		sqlinjectionlesson.js 						*/
+/*		sqlinjectionlesson.js						*/
 /*										*/
 /*	Implementation of sqlinjection lessons					*/
 /*										*/
@@ -28,11 +28,11 @@ const LessonBase = require("./lessonbase.js").LessonBase;
 class SqlInjectionLesson extends LessonBase {
 
    constructor(name,id) {
-	   super(name,id);
-	   }
+      super(name,id);
+    }
 
    initializeLesson(next) {
-        initialize(this.lesson_id,() => { return super.initializeLesson(next); });
+	initialize(this.lesson_id,() => { return super.initializeLesson(next); });
    }
 
    enableLesson(next) {
@@ -48,12 +48,12 @@ class SqlInjectionLesson extends LessonBase {
    }
 
    doAction(req,res,act) {
-	   if (act == 'attempt') {
-	     handleAttempt(req,res,this);
-           }
-           else if (act == 'done') {
-                   handleDone(req,res,this);
-           }
+      if (act == 'attempt') {
+	 handleAttempt(req,res,this);
+       }
+      else if (act == 'done') {
+	 handleDone(req,res,this);
+       }
     }
 
 }	// end of class SqlInjectionLesson
@@ -86,10 +86,10 @@ function initialize1(id,next,err,data)
 
 function initialize2(id,next,err,data)
 {
-        let cmd = "INSERT INTO SqlLogin_" + id + " (user,pwd,admin) VALUES ";
-        cmd += ' ( "spr", "fdajkfdajkd;fei4784m,v", true ), ';
-        cmd += ' ( "user234", "mypasswordgoeshere", false ); ';
-        db.query(cmd,(e1,d1) => { commandEnd(id,next,e1,d1); } );
+   let cmd = "INSERT INTO SqlLogin_" + id + " (user,pwd,admin) VALUES ";
+   cmd += ' ( "spr", "fdajkfdajkd;fei4784m,v", true ), ';
+   cmd += ' ( "user234", "mypasswordgoeshere", false ); ';
+   db.query(cmd,(e1,d1) => { commandEnd(id,next,e1,d1); } );
 }
 
 
@@ -117,20 +117,20 @@ function handleAttempt(req,res,lesson)
 
 function handleAttempt1(req,res,lesson,cmd,err,data)
 {
-   let rslt = { };     
+   let rslt = { };
    if (err != null) {
       rslt = { login: false, status: 'ERROR', query: cmd, message: err.sqlMessage };
-   } 
+    }
    else if (data.rows.length == 1) {
       let row = data.rows[0];
       rslt = { login: true, status: "SUCCESS", user: row.user, password: row.pwd, admin: row.admin };
-   }  
+    }
    else if (data.rows.length == 0) {
-      rslt = { login: false, status: "NONE", query: cmd, message: "No rows returned" };   
-   }
+      rslt = { login: false, status: "NONE", query: cmd, message: "No rows returned" };
+    }
    else {
-      rslt = { login: false, status: "TOOMANY", query: cmd, message: "Too many rows returned", rows: data.rows };    
-   }
+      rslt = { login: false, status: "TOOMANY", query: cmd, message: "Too many rows returned", rows: data.rows };
+    }
    res.end(JSON.stringify(rslt));
 }
 

@@ -1,0 +1,40 @@
+<BODY>
+  <H1>SQL Injection Example</H1>
+  <DIV class='lessontask'>
+	  <P>
+This lesson shows you how simple it is for an intruder to use Cross Site Scripting
+(XSS) to redirect the browser to a different page.
+<P>
+Here you are given a sample page.  Its URL is '/lesson/xsslesson/action/showpage'.
+Your job is to cause the page '/lesson/xsslesson/action/altpage' to appear in its
+place.	This alternate page is a duplicate of the page except it could have been on
+a hacker's web site and could capture private information the user enters and pass
+it to the hacker instead of the original application.
+<P>
+You are asked to enter your name and some information.	You will note that the
+name you enter is then placed in the page when you click on 'Try It'.  The contents
+of the name are not checked for embedded HTML.
+</P>
+  </DIV>
+  <BR>
+  <DIV class='lessoninput'>
+	<P>
+	   Hello {{user}}.   Welcome to your secret data store.
+	</P><P>
+	  <FORM id='xssform' method='POST' action='/lesson/xsslesson/action/done'>
+	  <LABEL class='inputlabel'>Enter Your Name: </LABEL>
+	  <INPUT id='sqlinjectionuser' type='text' name='name' width='80' placeholder='enter first name'>
+	  <BR>
+	  <LABEL class='inputlabel'>Private Information: </LABEL>
+	  <INPUT id='sqlinjectionpwd' type='text' name='secret' width='80' placeholder='enter passowrd'>
+	  <BR>
+	  <INPUT id='sqlinjectionsubmit' type='submit' value='Try It'/>
+	  </FORM>
+	</P>
+  </DIV>
+  <DIV class='lessondata'>
+	<H3>This is the COUNTERFEIT page</H3>
+  </DIV>
+
+
+</BODY>
