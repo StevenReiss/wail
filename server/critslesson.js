@@ -28,8 +28,8 @@ const fs = require("fs");
 class CritsLesson extends LessonBase {
 
    constructor(name,id,row) {
-           super(name,id);
-           this.design_id = row.reference;
+	   super(name,id);
+	   this.design_id = row.reference;
 	   }
 
    initializeLesson(next) {
@@ -45,7 +45,7 @@ class CritsLesson extends LessonBase {
    }
 
    showLesson(req,res,data) {
-      if (data == null) data = { };     
+      if (data == null) data = { };
       this.showPage(req,res,this.lesson_id + "lesson",data);
    }
 
@@ -54,13 +54,13 @@ class CritsLesson extends LessonBase {
 	 handleGetDesign(req,res,this);
        }
       else if (act == 'showdesign') {
-          handleShowDesign(req,res,this);
+	  handleShowDesign(req,res,this);
       }
       else if (act == 'critdesign') {
 	 handleCritDesign(req,res,this);
        }
       else if (act == 'getfeedback') {
-              handleCritFeedback(req,res,this);
+	      handleCritFeedback(req,res,this);
       }
     }
 
@@ -108,31 +108,59 @@ function enabler(id,next)
 
 /********************************************************************************/
 /*										*/
-/*	Action	methods 							*/
+/*	Action methods to get a design to evaluate				*/
 /*										*/
 /********************************************************************************/
 
 function handleGetDesign(req,res,lesson)
 {
-   db.query("SELECT * FROM DesignTable_" + lesson.design_id + "WHERE bannerid != $1",
-        [req.session.user.bannerid],
-        (e1,d1) => { handleGetDesign1(req,res,id,did,e1,d1); } );
+   db.query("SELECT * FROM DesignTable_" + lesson.design_id +
+	       " WHERE bannerid != $1 ORDER BY uses",
+	[req.session.user.bannerid],
+	(e1,d1) => { handleGetDesign1(req,res,id,did,e1,d1); } );
 }
 
- 
+
 function handleGetDesign1(req,res,lesson,err,data)
 {
    let ln = data.rows.length;
-   let idx = Math.floor(Math.random() * ln);
-   req.session.design = row[idx];
-   req.session.save();
-   let rslt = { bannerid : row[idx].bannerid, 
-        file : row[idx].filename,
-        lessonid : lesson.lesson_id };
+   let use = -1;
+   for (let i = 0; i < ln; ++i) {
+      if (use == -1) use = data.row[i].uses;
+      else if (data.row[i].uses > use) {
+	 ln = i;
+	 break;
+       }
+    }
+
+   let rslt = { };
+   if (ln == 0) {
+      rslt = { status: "NONE" };
+    }
+   else {
+      let idx = Math.floor(Math.random() * ln);
+      req.session.design = row[idx];
+      req.session.save();
+      let rslt = { status: "OK",
+		   bannerid : row[idx].bannerid,
+		   file : row[idx].filename,
+		   lessonid : lesson.lesson_id };
+    }
    res.end(JSON.stringify(rslt));
+
+   if (ln > 0) {
+      db.query("UPDATE DesignTable_" + lesson.lesson_id + 
+         " SET uses = $1 WHERE bannerid = $2",[use+1,row[idx].banerid]);
+   }
 }
 
 
+
+/********************************************************************************/
+/*										*/
+/*	Action methods to display a design file 				*/
+/*										*/
+/********************************************************************************/
 
 function handleShowDesign(req,res,lesson)
 {
@@ -141,27 +169,28 @@ function handleShowDesign(req,res,lesson)
     res.setHeader("Content-Length'",stat.size);
     res.setHeader("Content-Type","application/pdf");
     file.pipe(res);
-//     res.download(filepath,(err) => { if (err) {
-//             console.log("DOWNLOAD ERROR",err);
-//     }
-//     else { 
-//             console.log("DOWNLOAD OK ",filepath);
-//     } } );
 }
 
 
+
+/********************************************************************************/
+/*										*/
+/*	Action methods to handle comments on a design				*/
+/*										*/
+/********************************************************************************/
+
 function handleCritDesign(req,res,lesson)
 {
-        let critid = req.body.critid;
-        let critfile = req.body.critfile;
-        let critlikes = config.htmlSanitize(req.body.likes);
-        let critdislikes = config.htmlSanitize(req.body.dislikes);
-        let critimprove = config.htmlSanitize(req.body.improve);
-        let cmd = "INSERT INTO CritsTable_" + lesson.lesson_id;
-        cmd += " (bannerid, filename, likes, dislikes, improve)";
-        cmd += " VALUES ( $1,$2,$3,$4,$5 )";
-        db.query(cmd,[critid,critfile,critlikes,critdislikes,critimprove],
-                   (e1,d1) => { handleCritsDesign1(req,res,lesson,e1,d1); });
+   let critid = req.body.critid;
+   let critfile = req.body.critfile;
+   let critlikes = config.htmlSanitize(req.body.likes);
+   let critdislikes = config.htmlSanitize(req.body.dislikes);
+   let critimprove = config.htmlSanitize(req.body.improve);
+   let cmd = "INSERT INTO CritsTable_" + lesson.lesson_id;
+   cmd += " (bannerid, filename, likes, dislikes, improve)";
+   cmd += " VALUES ( $1,$2,$3,$4,$5 )";
+   db.query(cmd,[critid,critfile,critlikes,critdislikes,critimprove],
+	       (e1,d1) => { handleCritsDesign1(req,res,lesson,e1,d1); });
 }
 
 
@@ -174,39 +203,39 @@ function handleCritsDesign1(req,res,lesson,err,data)
 
 /********************************************************************************/
 /*										*/
-/*	Feedback request							*/
+/*	Action methods to show comments on a desgin				*/
 /*										*/
 /********************************************************************************/
 
 function handleCritFeedback(req,res,lesson)
 {
-        db.query("SELECT * FROM DesignTable_" + lesson.design_id + "WHERE bannerid = $1",
-        [req.session.user.bannerid],
-        (e1,d1) => { handleCritFeedbaack1(req,res,lesson,e1,d1); } );
-}
+   db.query("SELECT * FROM DesignTable_" + lesson.design_id + "WHERE bannerid = $1",
+	       [req.session.user.bannerid],
+	       (e1,d1) => { handleCritFeedbaack1(req,res,lesson,e1,d1); } );
+    }
 
 
 function handleCritFeedback1(req,res,lesson,err,data)
 {
-        let file = data.rows[0].filename;
+   let file = data.rows[0].filename;
 
-        let cmd = "SELECT * FROM CritsTable_" + lesson.lesson_id;
-        cmd += " WHERE bannerid = $1"
-        db.query(cmd,[req.session.user.bannderid],
-                (e1,d1) => { handleCritFeedback2(req,res,lesson,e1,d1); } );
+   let cmd = "SELECT * FROM CritsTable_" + lesson.lesson_id;
+   cmd += " WHERE bannerid = $1";
+   db.query(cmd,[req.session.user.bannderid],
+	       (e1,d1) => { handleCritFeedback2(req,res,lesson,e1,d1); } );
 }
 
 
 function handleCritFeedback2(req,res,lesson,err,data)
 {
-    let rslt = "";    
-    for (let row of data[rows]) {
-        rslt += `<hl><h3>Likes</h3><p>${row.likes}<br>
-                <h3>Dislikes</h3><p>${row.dislikes}<br>
-                <h3>Improvements</h3><p>${row.improve}<br>`;
+   let rslt = "";
+   for (let row of data[rows]) {
+      rslt += `<hl><h3>Likes</h3><p>${row.likes}<br>
+		<h3>Dislikes</h3><p>${row.dislikes}<br>
+		<h3>Improvements</h3><p>${row.improve}<br>`;
     }
-    let ret = { html: rslt };
-    res.end(JSON.stringify(ret));
+   let ret = { html: rslt };
+   res.end(JSON.stringify(ret));
 }
 
 

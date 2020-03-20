@@ -224,7 +224,7 @@ function errorHandler(err,req,res,next)
 /*										*/
 /********************************************************************************/
 
-lessonbase.setupLessons
+lessonbase.setupLessons()
 .then(setup())
 
 

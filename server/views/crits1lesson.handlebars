@@ -17,6 +17,9 @@ Remember that you will be getting comments as well.
                    <INPUT id='critssubmit' type='submit' value='Get Design' />
                 </FORM>
                 <BR>
+                <DIV id='getdesignerror' class='hidden error'>
+                        <SPAN>No designs available yet.  Try again latter.</SPAN>
+                </DIV>
         </DIV>
         <DIV id='crits1feedback' class='lessoninput'>
                 <FORM id='crits1res' method='POST' action='/lesson/{{lesson_id}}/action/critdesign'>

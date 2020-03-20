@@ -74,7 +74,8 @@ function initialize1(id,next,err,data)
 {
    let cmd = "CREATE TABLE DesignTable_" + id + "( ";
    cmd += " bannerid character(16), ";
-   cmd += " filename character(128) ";
+   cmd += " filename character(128), ";
+   cmd += " uses int DEFAULT 0 "
    cmd += ");";
    db.query(cmd,(e1,d1) => { commandEnd(id,next,e1,d1); } );
 }

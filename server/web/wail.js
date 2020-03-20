@@ -120,6 +120,12 @@ function handleCritsGetDesign(evt,lessonid)
 
 function handleCritsGetDesign1(resp)
 {
+    let sts = resp.status;
+    $("#getdesignerror").hide();
+    if (sts == 'NONE') {
+        $("#getdesignerror").show();
+        return;
+    }
     let bannerid = resp.bannerid;
     let file = resp.file;
     let lessonid = resp.lessonid;

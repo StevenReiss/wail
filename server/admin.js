@@ -28,12 +28,13 @@ function displayAdminPage(req,res)
 {
    checkAdmin(req);
 
-   db.query("SELECT * FROM lessons ORDER BY number",(e1,d1) => { displayAdminPage1(req,res,e1,d1) } );
+   db.pquery("SELECT * FROM lessons ORDER BY number")
+   .then((d1) => { displayAdminPage1(req,res,d1) } );
 }
 
 
 
-function displayAdminPage1(req,res,err,data)
+function displayAdminPage1(req,res,data)
 {
    let rdata = { title: "WAIL Administration Page"};
    rdata.lessons = data.rows;
@@ -41,9 +42,11 @@ function displayAdminPage1(req,res,err,data)
 
    for (lesson of rdata.lessons) {
 	   if (lesson.enabled) lesson.enabled = true;
-	   else lesson.enabled = false;
+           else lesson.enabled = false;
+           if (lesson.inited) lesson.inited = true;
+           else lesson.inited = false;
 	   lesson.url = '/lesson/' + lesson.id + "/page";
-   }
+     }
 
    res.render('admin',rdata);
 }

@@ -40,15 +40,18 @@ class LessonBase {
 	}
 
 	initializeLesson(next) { 
-           if (next != null) next();     
+           db.query("UPDATE lessons SET inited = true WHERE name = $1",[this.lesson_name],
+                (e1,d1) => { doNext(next) } );
         }
 
 	enableLesson(next) {
-	    db.query("UPDATE lessons SET enabled = true WHERE name = $1",[this.lesson_name],(e1,d1) => { doNext(next) } );
+            db.query("UPDATE lessons SET enabled = true WHERE name = $1",[this.lesson_name],
+            (e1,d1) => { doNext(next) } );
 	}
 
 	disableLesson(next) {
-	    db.query("UPDATE lessons SET enabled = false WHERE name = $1",[this,lesson_name], (e1,d1) => { doNext(next); } );
+            db.query("UPDATE lessons SET enabled = false WHERE name = $1",[this,lesson_name], 
+            (e1,d1) => { doNext(next); } );
 	}
 
         showLesson(req,res) { }
@@ -137,7 +140,13 @@ function doNext(next)
 }
 
 
-function setupLessons(next,reject)
+function setupLessons()
+{
+       return new Promise((res,rej) => { setupLessons0(res,rej); } );
+}
+
+
+function setupLessons0(next,reject)
 {
    db.query("SELECT * from lessons order by number",(e1,d1) => { setupLessons1(e1,d1,next); });
 }
@@ -171,7 +180,7 @@ exports.LessonBase = LessonBase;
 exports.handlePage = handlePage;
 exports.handleAction = handleAction;
 exports.handleAdminAction = handleAdminAction;
-exports.setupLessons = new Promise((res,rej) => { setupLessons(res,rej); } );
+exports.setupLessons = setupLessons;
 
 
 

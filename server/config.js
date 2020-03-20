@@ -40,7 +40,6 @@ function dbConnect()
 {
    let pwd = fs.readFileSync(__dirname + PWD_FILE);
    pwd = pwd.toString().trim();
-   console.log("READ",pwd);
    let conn = DB_CONNECT.replace("XXXXXX",pwd);
    
    return conn;
