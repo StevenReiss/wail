@@ -40,4 +40,4 @@ faitdbg.jar
 *.csv
 node_modules
 .wailpass
-
+passwords

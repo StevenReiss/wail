@@ -1,0 +1,29 @@
+<BODY>
+<DIV class='lessiontask'>
+<P>
+   Thank you for volunteering to serve as a user tester for a project other than your own.
+</P>
+<P>
+   Please read the task description and instructions carefully before starting the test.   Once you have
+done so, you can click on the START button.  When you have finished, please click on the SURVEY button to
+finish up the test.
+</P>
+</DIV>
+<BR>
+<DIV class='usertest'>
+<H3>Task Description:</H3>
+{{ task }}
+</DIV>
+<BR>
+<DIV class='lessoninput'>
+<BR>
+<FORM method='GET' action='{{starturl}} target='_blank'>
+   <INPUT type='submit' value='START' />
+</FORM>
+<BR>
+<FORM method='GET' action='{{questionurl}} target='_blank'>
+   <INPUT type='submit' value='SURVEY' />
+</FORM>
+</DIV>
+
+</BODY>

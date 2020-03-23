@@ -32,11 +32,11 @@ class UserTestLesson extends LessonBase {
 	   }
 
    initializeLesson(next) {
-      initialize(this.lesson_id,() => { return super.initializeLesson(next); });
+      initialize(this,() => { return super.initializeLesson(next); });
    }
 
    enableLesson(next) {
-      enabler(this.lesson_id,() => { return super.enableLesson(next); });
+      enabler(this,() => { return super.enableLesson(next); });
    }
 
    disableLesson(next) {
@@ -67,8 +67,11 @@ class UserTestLesson extends LessonBase {
 /*										*/
 /********************************************************************************/
 
-function initialize(id,next)
+function initialize(lesson,next)
 {
+   let id = lesson.lesson_id;
+   if (!id.startsWith("usertest")) return commandEnd(id,next);
+
    db.query("DROP TABLE IF EXISTS UserTestTable_" + id,(e1,d1) => { initialize1(id,next,e1,d1); } );
 }
 
@@ -92,8 +95,11 @@ function commandEnd(id,next,err,data)
 }
 
 
-function enabler(id,next)
+function enabler(lesson,next)
 {
+   let id = lesson.lesson_id;    
+   if (!id.startsWith("usertest")) return commandEnd(id,next);  
+
    db.query("DELETE FROM UserTestTable_" + id,(e1,d1) => {  commandEnd(id,next,e1,d1); })
 }
 
@@ -116,7 +122,6 @@ function handleNewTest(req,res,lesson)
 
 function handleNewTest1(req,res,lesson,data)
 {
-    let file = req.files.deignfile.file;
     let start = config.htmlSanitize(req.body.starturl);
     let task = config.htmlSanitize(req.body.task);
     let question = config.htmlSanitize(req.body.questionurl);

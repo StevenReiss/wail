@@ -1,0 +1,81 @@
+<BODY>
+	<H1>Final Project User Test Definition</H1>
+	<DIV class='lessontask'>
+	<P>
+This page lets you define a user test for your final project.  We are going to encourage everyone in
+the class to take such user tests so that each project can get real user feedback on their application
+while there is still time to fix any user-related problems.  (There is an appropriate lesson with this
+application for that.)
+	</P>
+	<P>
+In order to define a user test you will need to specify three things.  Note that before you do so, you
+should give careful thought as to what you want to get our of such a user test, what you expect the user
+to do, and what questions you want to ask the user.  The data that is needed includes:
+<UL>
+   <LI>
+      A description of the task you want the user to perform using your application.  This should
+      provide adequate motivation for the user (think of a use case), a description of their goals,
+      and any other information that they might need in order to perform the task.  Making the
+      task too complex will only frustrate the user, so keep it relatively simple.  You should ensure
+      that you provide all the information they will need since you will not be around to answer
+      questions while they are attempting the task.
+   </LI>
+   <LI>
+      The starting URL for the task. This can be a page you create specifically for the user test
+      or it can just be the home page for your application.  Note that if your application requires
+      a login you either have to provide the user with account information in the task description or
+      provide an internal page that automatically logs the user in.  If your application is a mobile
+      app, then this URL should point to a page that lets the user load (or at least run) your
+      applicaiton on their phone or tablet.  This could, for example, be a link to the NativeScript
+      Preview QR code for your application, provided you have suitable playground running.
+   </LI>
+   <LI>
+      The URL of a questionaire that the user should take after (or while) they are doing the user
+      study.  This can be a link to a Google form, a Brown Qualtrix survey, or another similar
+      form. You should ensure that the questions that motivated your test case are asked here and
+      that the user has a chance to provide additional feedback and suggestions.
+   </LI>
+</UL>
+	<P>
+You are also asked to identify your project.  This serves two purposes.  Each project is only allowed
+one active test case at a time.  This lets you provide a new test case once you have enough inputs on
+the current one or to update your test case (say making the task description more informative if the
+initial testees become confused.)  Second, when you volunteer to take a test, you will not be given
+a test from your own project.
+	</P>
+	<P>
+Because of this, your project team should probably designate one team member to be in charge of
+user testing, that is of creating these tests and then analyzing the results.
+	</P>
+	</DIV>
+	<BR>
+	<DIV class='lessoninput'>
+	     <FORM id='testcase1form' method='POST' action='/lesson/{{lesson_id}}/action/newtest'
+			enctype='multipart/form-data'>
+		<LABEL class='inputlabel'>Project Name: </LABEL>
+		<INPUT name='project' type='text' width='24' />
+		<BR>
+		<LABEL class='inputlabel'>Task Description: </LABEL>
+		<TEXTAREA id='testcase1task' name='task' rows='10' cols='64'></TEXTAREA>
+		<BR>
+		<LABEL class='inputlabel'>Starting URL: </LABEL>
+		<INPUT name='starturl' type='text' width='48' />
+		<BR>
+		<LABEL class='inputlabel'>Questionaire URL: </LABEL>
+		<INPUT name='questionurl' type='text' width='48' />
+		<BR>
+		<INPUT id='testcasesubmit' type='submit' value='Submit Test' />
+	     </FORM>
+	</DIV>
+
+
+<SCRIPT>
+
+$(function() {
+    let s1 = new SimpleMDE( { element : document.getElementById("testcase1task")});
+});
+
+
+
+</SCRIPT>
+</BODY>

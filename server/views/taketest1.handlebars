@@ -1,0 +1,32 @@
+<BODY>
+	<H1>Do User Testing for Another Project</H1>
+	<DIV class='lessontask'>
+	<P>
+This page lets you take a user test for a project other than your own.	Clicking on the Take Test
+button will load the information for user test that you can then use to provide input to another
+project.   Provide the name of your project so that we can ensure that you are not given a test
+for your own project.
+
+	</P>
+	</DIV>
+	<BR>
+	<DIV class='lessoninput'>
+	     <FORM id='taketest1form' method='POST' action='/lesson/{{lesson_id}}/action/taketest'
+			target='_blank' >
+		<LABEL class='inputlabel'>Your Project Name: </LABEL>
+		<INPUT name='project' type='text' width='24' />
+		<BR>
+		<INPUT id='taketestsubmit' type='submit' value='Take Test' />
+	     </FORM>
+	</DIV>
+
+
+<SCRIPT>
+
+$(function() {
+});
+
+
+
+</SCRIPT>
+</BODY>

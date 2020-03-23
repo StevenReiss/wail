@@ -72,8 +72,9 @@ VALUES
    ("Design 1", "design1", "designlesson", NULL, "Quick Web Page Design Example" ),
    ("Crits 1", "crits1", "critslesson", "design1", "Crits on Quick Web Page Design Example" ),
    ("SQL Injection", "sqlinjection", "sqlinjectionlesson", NULL, "SQL Injection Attacks" ),
-   ("XSS Attack", "xss", "xsslesson", NULL, "Cross-Site Scripting Attacks" );
-
+   ("XSS Attack", "xss", "xsslesson", NULL, "Cross-Site Scripting Attacks" ),
+   ("Define User Test", "usertest1", "usertestlesson", NULL, "Define a user test for your final project" ),
+   ('Take a User Test', 'taketest1', 'usertestlesson', NULL, "Take a uesr test for another project" );
 
 UPDATE lessons set enabled = true WHERE name = 'Design 1';
 
