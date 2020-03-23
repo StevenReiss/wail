@@ -1,5 +1,5 @@
 /********************************************************************************/
-/*										*/			
+/*										*/		
 /*		auth.js 							*/
 /*										*/
 /*	Authentication methods for wail 					*/
@@ -59,7 +59,7 @@ function handleLogin(req,res)
 
 function handleLogin1(req,res,err,data)
 {
-        console.log("HL!",err,data.rows);
+   console.log("HL!",err,data.rows);
    if (err) {
       let rslt = { status : "ERROR", message: "Database problem: " + err };
       res.end(JSON.stringify(rslt));
@@ -101,8 +101,8 @@ function handleLogin2(req,res,err,data)
 	 req.user = { bannerid: "", name : req.body.user, admin : true };
 	 req.session.user = req.user;
 	 req.session.admin = req.admin;
-         req.session.save();
-         let rslt = { status : "ADMIN", user : req.user };
+	 req.session.save();
+	 let rslt = { status : "ADMIN", user : req.user };
 	 res.end(JSON.stringify(rslt));
        }
     }
@@ -123,64 +123,3 @@ exports.handleLogin = handleLogin;
 
 
 /* end of auth.js */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

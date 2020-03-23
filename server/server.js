@@ -75,9 +75,10 @@ function setup()
    app.get("/home",displayHomePage);
    app.get("/index",displayHomePage);
 
+   app.post("/login",auth.handleLogin);
+
    app.use(auth.authenticate);
 
-   app.post("/login",auth.handleLogin);
    app.all("/lessons",displayLessonsPage);
    app.all("/lesson/:lessonid/page",lessonbase.handlePage);
    app.all("/lesson/:lessonid/action/:action",lessonbase.handleAction);

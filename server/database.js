@@ -106,6 +106,7 @@ function fixQuery(q)
 /********************************************************************************/
 
 exports.query = query;
+exports.pquery = pquery;
 
 
 

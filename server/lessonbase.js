@@ -50,7 +50,7 @@ class LessonBase {
 	}
 
 	disableLesson(next) {
-            db.query("UPDATE lessons SET enabled = false WHERE name = $1",[this,lesson_name], 
+            db.query("UPDATE lessons SET enabled = false WHERE name = $1",[this.lesson_name], 
             (e1,d1) => { doNext(next); } );
 	}
 

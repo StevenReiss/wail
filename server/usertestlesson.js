@@ -167,8 +167,7 @@ function handleTakeTest1(req,res,lesson,data)
        }
     }
 
-   let rdata= { };
-   let page = 'shownotest';
+   let rdata= { };   let page = 'shownotest';
    if (ln == 0) {
       rdata = { status: false };
     }

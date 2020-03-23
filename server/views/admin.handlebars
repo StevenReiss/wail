@@ -3,21 +3,42 @@
 <H1>Administration Page for WAIL</H1>
 <H2>Actions for existing Lessons</H2>
 <DIV class='admin1'>
-   <FORM id='adminform' action='/admin/action/update' method='post'>
+   {{!-- <FORM id='adminform' action='/admin/action/update' method='post'>
       Lesson: <SELECT id='lessonchoice' name='lesson'>
-              {{#lessons}}
-              <OPTION value='{{id}}'>{{name}}</OPTION>
-              {{/lessons}}
+	      {{#lessons}}
+	      <OPTION value='{{id}}'>{{name}}</OPTION>
+	      {{/lessons}}
       </SELECT>
-      &nbsp;&nbsp;Action: 
+      &nbsp;&nbsp;Action:
       <SELECT id='lessonaction' name='action'>
-              <OPTION value='ENABLE'>ENABLE</OPTION>
-              <OPTION value='DISABLE'>DISABLE</OPTION>
-              <OPTION value='INITIALIZE'>INITIALIZE</OPTION>
+	      <OPTION value='ENABLE'>ENABLE</OPTION>
+	      <OPTION value='DISABLE'>DISABLE</OPTION>
+	      <OPTION value='INITIALIZE'>INITIALIZE</OPTION>
       </SELECT>
       <br>
       <INPUT id='adminsubmit' type='submit' value='Do Action' />
+   </FORM> --}}
+
+   {{#lessons}}
+   <DIV>
+   <FORM id='adminform_{{id}}' action='/admin/action/update' method='post'>
+      <LABEL>Lesson {{name}}: </LABEL>
+      <INPUT type='hidden' name='lesson' value='{{id}}' />
+{{#if inited}}
+ {{#if enabled}}
+      <INPUT type='hidden' name='action' value='DISABLE' />
+      <INPUT type='submit' value='DISABLE' />
+ {{else}}
+      <INPUT type='hidden' name='action' value='ENABLE' />
+      <INPUT type='submit' value='ENABLE' />
+ {{/if}}
+{{else}}
+      <INPUT type='hidden' name='action' value='INITIALIZE' />
+      <INPUT type='submit' value='INITIALIZE' />
+{{/if}}
    </FORM>
+   </DIV>
+   {{/lessons}}
 </DIV>
 <BR>
 <H2>Create a new lesson</H2>
@@ -25,11 +46,11 @@
    <FORM id='newlesson' action='/admin/action/new' method='post'>
       <LABEL class='newlabel'>Id:</LABEL>
       <INPUT type='text' id='newid'/>
-      <BR>     
+      <BR>
       <LABEL class='newlabel'>Name:</LABEL>
       <INPUT type='text' id='newname'/>
       <BR>
-      <LABEL class='newlabel'>Description:</LABEL> 
+      <LABEL class='newlabel'>Description:</LABEL>
       <INPUT type='text' id='newdesc'/>
       <BR>
       <LABEL class='newlabel'>Module:</LABEL>

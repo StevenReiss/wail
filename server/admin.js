@@ -47,7 +47,7 @@ function displayAdminPage1(req,res,data)
            else lesson.inited = false;
 	   lesson.url = '/lesson/' + lesson.id + "/page";
      }
-
+   console.log("ADMIN DATA",rdata);
    res.render('admin',rdata);
 }
 
