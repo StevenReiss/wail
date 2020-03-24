@@ -61,6 +61,7 @@ VALUES
    ("Design 1", "design1", "designlesson", NULL, "Quick Web Page Design Example" ),
    ("Crits 1", "crits1", "critslesson", "design1", "Crits on Quick Web Page Design Example" ),
    ("Design 2", "design2", "designlesson", NULL, "Quick Web Page Redesign Example" ),
+   ("Crits 2", "crits2", "crits2esson", "design2", "Crits on Quick Web Page Redesign Example" ),
    ("SQL Injection", "sqlinjection", "sqlinjectionlesson", NULL, "SQL Injection Attacks" ),
    ("XSS Attack", "xss", "xsslesson", NULL, "Cross-Site Scripting Attacks" ),
    ("Define User Test", "usertest1", "usertestlesson", NULL, "Define a user test for your final project" ),
