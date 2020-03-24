@@ -1,0 +1,42 @@
+<BODY>
+        <H1>Quick Web Page Design Example Update</H1>
+        <DIV class='lessontask'>
+        <P>
+Now that you have done a design for Peter's Pasta Parlor and gotten feedback on that design, you
+can probably do a better job on the design by taking the feedback you got as well as any insights
+you obtained by looking at and commenting on other peoples designs.  
+        </P>
+        <P>
+You should sketch out a new web page for Peter.  It can be a update of your original design or it
+can be a completely new design.  Again, it can be done on paper or you can use a tool 
+such as adobe XD, figma, photoshop, etc.  But you only have a limited amount of time (5-10 minutes), so 
+we are looking for just an outline of what you are thinking of.             
+        </P>
+        <P>
+ When you are done you should upload your design.  If you use paper, then take a picture (or scan it) to
+ produce an appropriate image.  Please convert all designs to PDF before uploading.                 
+        </P>
+
+        </DIV>
+        <BR>
+        <DIV class='lessoninput'>
+             <FORM id='design2form' method='POST' action='/lesson/{{lesson_id}}/action/upload'
+                        enctype='multipart/form-data'>
+                     <INPUT id='design2file' name='designfile' type='file'  accept='application/pdf' />
+                     <BR>
+                     <SPAN id='design2error' class='error hidden'>Bad Id</SPAN>
+                     <BR>
+                     <INPUT id='designsubmit' type='submit' value='Submit' />
+             </FORM>   
+        </DIV>
+
+
+<SCRIPT>
+$(function() {
+   $("#design2form").submit(event => handleDesignSubmit(event,'design2file','design2error')); 
+});
+
+
+
+</SCRIPT>        
+</BODY>

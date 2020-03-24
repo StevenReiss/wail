@@ -1,10 +1,10 @@
 <BODY id='critbody'>
-        <H1>Quick Web Page Design Crits</H1>
+        <H1>Quick Web Page Redesign Crits</H1>
         <DIV class='lessontask'>
                 <P>
-In this lesson you will be give a (random) design from another student.  Your job is to
-provide constructive criticism on that design, comments that would be helpful to designer
-in eventually doing a redesign.                         
+In this lesson you will be give a (random) redesign from another student.  Your job is to
+provide constructive criticism on that redesign, comments that would be helpful to designer
+in eventually doing another redesign.                         
                 </P>
                 <P>
 Your comments should be constructive.  Don't be overly critical without being helpful.
@@ -12,8 +12,8 @@ Remember that you will be getting comments as well.
                 </P>
         </DIV>
         <BR>
-        <DIV id='crits1getdesign' class='lessoninput'>
-                <FORM id='crits1req' method='POST' action='/lesson/{{lesson_id}}/action/getdesign'>
+        <DIV id='crits2getdesign' class='lessoninput'>
+                <FORM id='crits2req' method='POST' action='/lesson/{{lesson_id}}/action/getdesign'>
                    <INPUT id='critssubmit' type='submit' value='Get Design' />
                 </FORM>
                 <BR>
@@ -21,18 +21,18 @@ Remember that you will be getting comments as well.
                         <SPAN>No designs available yet.  Try again latter.</SPAN>
                 </DIV>
         </DIV>
-        <DIV id='crits1feedback' class='lessoninput'>
-                <FORM id='crits1res' method='POST' action='/lesson/{{lesson_id}}/action/critdesign'>
+        <DIV id='crits2feedback' class='lessoninput'>
+                <FORM id='crits2res' method='POST' action='/lesson/{{lesson_id}}/action/critdesign'>
                 <INPUT id='critid' type='hidden' />
                 <INPUT id='critfile' type='hidden' />
                 <LABEL class='inputlabel'>What I like about the design:</LABEL>
-                <TEXTAREA id='crits1likes' name='likes' rows='10' cols='64'></TEXTAREA>
+                <TEXTAREA id='crits2likes' name='likes' rows='10' cols='64'></TEXTAREA>
                 <BR>
                 <LABEL class='inputlabel'>What I dislike about the design:</LABEL>
-                <TEXTAREA id='crits1dislikes' name='dislikes' rows='10' cols='64'></TEXTAREA>
+                <TEXTAREA id='crits2dislikes' name='dislikes' rows='10' cols='64'></TEXTAREA>
                 <BR>
                 <LABEL class='inputlabel'>How the design could be improved:</LABEL>
-                <TEXTAREA id='crits1improve' name='improve' rows='10' cols='64'></TEXTAREA>
+                <TEXTAREA id='crits2improve' name='improve' rows='10' cols='64'></TEXTAREA>
                 <BR>
                 <INPUT type='submit' value='Submit Crits' />
                 </FORM>'
@@ -42,10 +42,10 @@ Remember that you will be getting comments as well.
 
 <SCRIPT>
 $(function() {
-    $("#crit1req").submit(event => handleCritsGetDesign(event,{{lesson_id}})); 
-    let s1 = new SimpleMDE( { element : document.getElementById("crits1likes")});
-    let s2 = new SimpleMDE( { element : document.getElementById("crits1dislikes")});
-    let s3 = new SimpleMDE( { element : document.getElementById("crits1improve")});
+    $("#crit2req").submit(event => handleCritsGetDesign(event,{{lesson_id}})); 
+    let s1 = new SimpleMDE( { element : document.getElementById("crits2likes")});
+    let s2 = new SimpleMDE( { element : document.getElementById("crits2dislikes")});
+    let s3 = new SimpleMDE( { element : document.getElementById("crits2improve")});
 });
 
 
