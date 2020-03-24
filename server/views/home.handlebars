@@ -32,6 +32,7 @@ the correct student.
 <SCRIPT>
 
 $(function() {
+   $("#loginpwd").val("");     
    $("#loginid").on('keyup',handleLoginEnter);  
    $("#loginpwd").keyup(event => handleLoginEnter(event));
    $("#useridform").submit(event => handleLoginSubmit(event)); 

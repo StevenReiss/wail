@@ -74,8 +74,7 @@ function handleShowPage(req,res,lesson)
 {
    let u = req.body.name;
    let s = req.body.secret;
-
-   let rdata = { user : u };
+   let rdata = { firstname : u };
    lesson.showPage(req,res,'xsslesson',rdata);
 }
 
@@ -86,7 +85,7 @@ function handleAltPage(req,res,lesson)
    let s = req.body.secret;
    u = config.htmlSanitize(u);
 
-   let rdata = { user : u };
+   let rdata = { user : u, secret: s };
    lesson.showPage(req,res,'xssresult',rdata);
 }
 
