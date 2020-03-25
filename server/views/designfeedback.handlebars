@@ -10,6 +10,8 @@
         <DIV class='lessoninput'>
                 <BR>
                 <INPUT id='feedbackrequest' type='button' value="UPDATE" />
+                <BR>
+                <A href='/lessons'>Finished With Feedback</A>
         </DIV>
         <DIV class='lessondata'>
           <H2>Feedback:</H2>  
@@ -19,7 +21,7 @@
 <SCRIPT>
 
  $(function() {
-    $("#feebackrequest").click(evt => { handleFeedbackRequest({{lesson_id}},'feedbacktext'); } );   
+    $("#feedbackrequest").click(evt => { handleFeedbackRequest('{{lesson_id}}','feedbacktext'); } );   
  });   
 
 </SCRIPT>        

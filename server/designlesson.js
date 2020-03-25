@@ -102,16 +102,18 @@ function enabler(id,next)
 function handleUpload(req,res,id)
 {
    console.log("FILES",req.body,req.params,req.session.user,req.files);
-   db.query("DELETE FROM DesignTable_" + id + " WHERE bannerid = $1",[req.user.id],
+   db.query("DELETE FROM DesignTable_" + id + " WHERE bannerid = $1",
+                [req.session.user.bannerid],
 	(e1,d1) => { handleUpload1(req,res,id,e1,d1); } );
 }
 
 
 function handleUpload1(req,res,id,err,data)
 {
-    let file = req.files.deignfile.file;
+    let file = req.files.designfile.file;
+    let bannerid = req.session.user.bannerid;
     let cmd = "INSERT INTO DesignTable_" + id + "(bannerid,filename) VALUES($1,$2)";
-    db.query(cmd,[req.user.id,file],(e1,d1) => { handleUpload2(req,res,id,e1,d1); });
+    db.query(cmd,[bannerid,file],(e1,d1) => { handleUpload2(req,res,id,e1,d1); });
 }
 
 

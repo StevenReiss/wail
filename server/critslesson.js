@@ -15,6 +15,7 @@
 /********************************************************************************/
 
 const db = require("./database.js");
+const config = require("./config");
 const LessonBase = require("./lessonbase.js").LessonBase;
 const fs = require("fs");
 
@@ -87,7 +88,7 @@ function initialize1(id,next,err,data)
    cmd += " bannerid character(16), ";
    cmd += " filename character(128), "
    cmd += " likes text,"
-   cmd += " disikes text,"
+   cmd += " dislikes text,"
    cmd += " improve text"
    cmd += ");";
    db.query(cmd,(e1,d1) => { commandEnd(id,next,e1,d1); } );
@@ -117,7 +118,7 @@ function handleGetDesign(req,res,lesson)
    db.query("SELECT * FROM DesignTable_" + lesson.design_id +
 	       " WHERE bannerid != $1 ORDER BY uses",
 	[req.session.user.bannerid],
-	(e1,d1) => { handleGetDesign1(req,res,id,did,e1,d1); } );
+	(e1,d1) => { handleGetDesign1(req,res,lesson,e1,d1); } );
 }
 
 
@@ -126,31 +127,35 @@ function handleGetDesign1(req,res,lesson,err,data)
    let ln = data.rows.length;
    let use = -1;
    for (let i = 0; i < ln; ++i) {
-      if (use == -1) use = data.row[i].uses;
-      else if (data.row[i].uses > use) {
+      if (use == -1) use = data.rows[i].uses;
+      else if (data.rows[i].uses > use) {
 	 ln = i;
 	 break;
        }
     }
 
    let rslt = { };
+   let idx = 0;
+   let row = null;
    if (ln == 0) {
       rslt = { status: "NONE" };
     }
    else {
-      let idx = Math.floor(Math.random() * ln);
-      req.session.design = row[idx];
+      idx = Math.floor(Math.random() * ln);
+      row = data.rows[idx];
+      req.session.design = row;
       req.session.save();
-      let rslt = { status: "OK",
-		   bannerid : row[idx].bannerid,
-		   file : row[idx].filename,
+      rslt = { status: "OK",
+		   bannerid : row.bannerid,
+		   file : row.filename,
 		   lessonid : lesson.lesson_id };
     }
+    console.log("GETDESIGN",rslt);
    res.end(JSON.stringify(rslt));
 
    if (ln > 0) {
-      db.query("UPDATE DesignTable_" + lesson.lesson_id + 
-         " SET uses = $1 WHERE bannerid = $2",[use+1,row[idx].banerid]);
+      db.query("UPDATE DesignTable_" + lesson.design_id + 
+         " SET uses = $1 WHERE bannerid = $2",[use+1,row.bannerid]);
    }
 }
 
@@ -165,9 +170,12 @@ function handleGetDesign1(req,res,lesson,err,data)
 function handleShowDesign(req,res,lesson)
 {
     let filepath =  req.session.design.filename;
-    let stat = fs.startSync(filepath);
+    let stat = fs.statSync(filepath);
+    console.log("SHOWDESIGN",stat.size,filepath);
     res.setHeader("Content-Length'",stat.size);
-    res.setHeader("Content-Type","application/pdf");
+    if (filepath.endsWith(".pdf"))
+       res.setHeader("Content-Type","application/pdf");
+    let file = fs.createReadStream(filepath);
     file.pipe(res);
 }
 
@@ -209,9 +217,9 @@ function handleCritsDesign1(req,res,lesson,err,data)
 
 function handleCritFeedback(req,res,lesson)
 {
-   db.query("SELECT * FROM DesignTable_" + lesson.design_id + "WHERE bannerid = $1",
+   db.query("SELECT * FROM DesignTable_" + lesson.design_id + " WHERE bannerid = $1",
 	       [req.session.user.bannerid],
-	       (e1,d1) => { handleCritFeedbaack1(req,res,lesson,e1,d1); } );
+	       (e1,d1) => { handleCritFeedback1(req,res,lesson,e1,d1); } );
     }
 
 
@@ -221,7 +229,7 @@ function handleCritFeedback1(req,res,lesson,err,data)
 
    let cmd = "SELECT * FROM CritsTable_" + lesson.lesson_id;
    cmd += " WHERE bannerid = $1";
-   db.query(cmd,[req.session.user.bannderid],
+   db.query(cmd,[req.session.user.bannerid],
 	       (e1,d1) => { handleCritFeedback2(req,res,lesson,e1,d1); } );
 }
 
@@ -229,11 +237,12 @@ function handleCritFeedback1(req,res,lesson,err,data)
 function handleCritFeedback2(req,res,lesson,err,data)
 {
    let rslt = "";
-   for (let row of data[rows]) {
-      rslt += `<hl><h3>Likes</h3><p>${row.likes}<br>
+   for (let row of data.rows) {
+      rslt += `<hr><h3>Likes</h3><p>${row.likes}<br>
 		<h3>Dislikes</h3><p>${row.dislikes}<br>
 		<h3>Improvements</h3><p>${row.improve}<br>`;
     }
+    console.log("FEEDBACK RESULT",rslt);
    let ret = { html: rslt };
    res.end(JSON.stringify(ret));
 }

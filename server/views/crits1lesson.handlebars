@@ -12,8 +12,8 @@ Remember that you will be getting comments as well.
                 </P>
         </DIV>
         <BR>
-        <DIV id='crits1getdesign' class='lessoninput'>
-                <FORM id='crits1req' method='POST' action='/lesson/{{lesson_id}}/action/getdesign'>
+        <DIV id='critsgetdesign' class='lessoninput'>
+                <FORM id='crits1req' >
                    <INPUT id='critssubmit' type='submit' value='Get Design' />
                 </FORM>
                 <BR>
@@ -21,10 +21,16 @@ Remember that you will be getting comments as well.
                         <SPAN>No designs available yet.  Try again latter.</SPAN>
                 </DIV>
         </DIV>
-        <DIV id='crits1feedback' class='lessoninput'>
+        <DIV id='critsshowdesign' class='lessoninput hidden'>
+                <FORM id='crits1show' method='POST' target='_blank' action='/lesson/{{lesson_id}}/action/showdesign'>
+                   <INPUT id='crits1showsub' type='submit' value='Show Design' />
+                </FORM>
+        </DIV>
+        <BR>
+        <DIV id='critsfeedback' class='lessoninput hidden'>
                 <FORM id='crits1res' method='POST' action='/lesson/{{lesson_id}}/action/critdesign'>
-                <INPUT id='critid' type='hidden' />
-                <INPUT id='critfile' type='hidden' />
+                <INPUT id='critid' name='critid' type='hidden' />
+                <INPUT id='critfile' name='critfile' type='hidden' />
                 <LABEL class='inputlabel'>What I like about the design:</LABEL>
                 <TEXTAREA id='crits1likes' name='likes' rows='10' cols='64'></TEXTAREA>
                 <BR>
@@ -35,14 +41,14 @@ Remember that you will be getting comments as well.
                 <TEXTAREA id='crits1improve' name='improve' rows='10' cols='64'></TEXTAREA>
                 <BR>
                 <INPUT type='submit' value='Submit Crits' />
-                </FORM>'
+                </FORM>
         </DIV>
         
 
 
 <SCRIPT>
 $(function() {
-    $("#crit1req").submit(event => handleCritsGetDesign(event,{{lesson_id}})); 
+    $("#crits1req").submit((event) => handleCritsGetDesign(event,'{{lesson_id}}')); 
     let s1 = new SimpleMDE( { element : document.getElementById("crits1likes")});
     let s2 = new SimpleMDE( { element : document.getElementById("crits1dislikes")});
     let s3 = new SimpleMDE( { element : document.getElementById("crits1improve")});

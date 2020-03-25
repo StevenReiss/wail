@@ -53,7 +53,6 @@ function setup()
    app.set('view engine','handlebars');
    app.use(logger('combined'));
    
-   app.use('/static',checkStatic);
    app.use('/static',express.static(__dirname + config.STATIC));
    app.get('/robots.txt',(req,res) => { res.redirect('/static/robots.txt')});
  
@@ -94,12 +93,6 @@ function setup()
 }
 
 
-function checkStatic(req,res,next)
-{
-        console.log(__dirname + config.STATIC);
-        next();
-}
-
 
 /********************************************************************************/
 /*										*/
@@ -109,7 +102,7 @@ function checkStatic(req,res,next)
 
 function displayRootPage(req,res)
 {
-        if (req.session.user == null) displayHomePage(req.res);
+        if (req.session.user == null) displayHomePage(req,res);
         else displayLessonsPage(req,res);
 }
 
@@ -118,7 +111,7 @@ function displayRootPage(req,res)
 function displayHomePage(req,res)
 {
    let rdata = { title: "WAIL Home Page"};
-   if (req.session.user != null) {
+   if (req.session != null && req.session.user != null) {
       req.user = req.session.user;
       rdata.user = req.session.user;
     }

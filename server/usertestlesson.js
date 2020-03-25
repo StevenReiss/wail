@@ -15,6 +15,7 @@
 /********************************************************************************/
 
 const db = require("./database.js");
+let config = require("./config.js");
 const LessonBase = require("./lessonbase.js").LessonBase;
 
 
@@ -27,8 +28,9 @@ const LessonBase = require("./lessonbase.js").LessonBase;
 
 class UserTestLesson extends LessonBase {
 
-   constructor(name,id) {
-	   super(name,id);
+   constructor(name,id,row) {
+           super(name,id);
+           this.test_id = row.reference;
 	   }
 
    initializeLesson(next) {
@@ -113,6 +115,7 @@ function enabler(lesson,next)
 function handleNewTest(req,res,lesson)
 {
    let id = lesson.lesson_id;
+   console.log("NEWTEST",req.body);
 
    db.pquery("DELETE FROM UserTestTable_" + id + " WHERE project = $1",[req.body.project])
       .then((d1) => handleNewTest1(req,res,lesson,d1) )
@@ -122,11 +125,12 @@ function handleNewTest(req,res,lesson)
 
 function handleNewTest1(req,res,lesson,data)
 {
+    let id = lesson.lesson_id;
     let start = config.htmlSanitize(req.body.starturl);
     let task = config.htmlSanitize(req.body.task);
     let question = config.htmlSanitize(req.body.questionurl);
 
-    let cmd = "INSERT INTO UserTestTable_" + id + "(project,starturl,task,questionurl) VALUES($1,$2,$3,$4)";
+    let cmd = "INSERT INTO UserTestTable_" + id + " (project,starturl,task,questionurl) VALUES($1,$2,$3,$4)";
     return db.pquery(cmd,[req.body.project,start,task,question] ,
 			(e1,d1) => { handleNewTest2(req,res,id,e1,d1); });
 }
@@ -147,7 +151,7 @@ function handleNewTest2(req,res,id,err,data)
 
 function handleTakeTest(req,res,lesson)
 {
-   let id = lesson.lesson_id;
+   let id = lesson.test_id;
 
    db.pquery("SELECT * FROM UserTestTable_" + id + " WHERE project != $1 ORDER BY uses",
 	       [req.body.project])
@@ -160,27 +164,29 @@ function handleTakeTest1(req,res,lesson,data)
    let ln = data.rows.length;
    let use = -1;
    for (let i = 0; i < ln; ++i) {
-      if (use == -1) use = data.row[i].uses;
-      else if (data.row[i].uses > use) {
+      if (use == -1) use = data.rows[i].uses;
+      else if (data.rows[i].uses > use) {
 	 ln = i;				
 	 break;
        }
     }
 
-   let rdata= { };   let page = 'shownotest';
+   let rdata= { };   
+   let page = 'shownotest';
    if (ln == 0) {
       rdata = { status: false };
     }
    else {
-      page = 'showusertest';
-      db.query("UPDATE DesignTable_" + lesson.lesson_id +
-		  " SET uses = $1 WHERE bannerid = $2",[use+1,row[idx].banerid]);
       let idx = Math.floor(Math.random() * ln);
+      let row = data.rows[idx];  
+      page = 'showusertest';
+      db.query("UPDATE DesignTable_" + lesson.test_id +
+		  " SET uses = $1 WHERE bannerid = $2",[use+1,row.bannerid]);
       rdata = { status: true,
-		project : row[idx].project,
-		starturl : row[idx].starturl,
-		task : row[idx].task,
-		questionurl : row[idx].questionurl };
+		project : row.project,
+		starturl : row.starturl,
+		task : row.task,
+		questionurl : row.questionurl };
     }
 
    lesson.showPage(req,res,page,rdata);

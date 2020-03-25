@@ -14,7 +14,7 @@ we are looking for just an outline of what you are thinking of.
         </P>
         <P>
  When you are done you should upload your design.  If you use paper, then take a picture (or scan it) to
- produce an appropriate image.  Please convert all designs to PDF before uploading.                 
+ produce an appropriate image.  Designs can be uploaded as images or pdf files.         
         </P>
 
         </DIV>
@@ -22,7 +22,8 @@ we are looking for just an outline of what you are thinking of.
         <DIV class='lessoninput'>
              <FORM id='design2form' method='POST' action='/lesson/{{lesson_id}}/action/upload'
                         enctype='multipart/form-data'>
-                     <INPUT id='design2file' name='designfile' type='file'  accept='application/pdf' />
+                     <INPUT id='design2file' name='designfile' type='file'  
+                        accept='application/pdf,image/*' />
                      <BR>
                      <SPAN id='design2error' class='error hidden'>Bad Id</SPAN>
                      <BR>

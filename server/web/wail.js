@@ -104,6 +104,7 @@ function handleDesignSubmit(evt,filefield,errorfield)
 
 function handleCritsGetDesign(evt,lessonid)
 {
+        evt.preventDefault();
 	let data = { };
 	fetch('/lesson/' + lessonid + "/action/getdesign", {
 		method: 'POST',
@@ -113,13 +114,14 @@ function handleCritsGetDesign(evt,lessonid)
 		body: JSON.stringify(data)  })
 	    .then( (resp) => { let v = resp.json(); return v; } )
 	    .then( handleCritsGetDesign1)
-	    .catch( (e) => { throw e; } );
+	    .catch( (e) => { console.log("ERROR",e); } );
 }
 
 
 
 function handleCritsGetDesign1(resp)
 {
+        console.log("CRITSGET",resp);
     let sts = resp.status;
     $("#getdesignerror").hide();
     if (sts == 'NONE') {
@@ -129,18 +131,21 @@ function handleCritsGetDesign1(resp)
     let bannerid = resp.bannerid;
     let file = resp.file;
     let lessonid = resp.lessonid;
-    $("#critid:)").val(bannerid);
+    $("#critid").val(bannerid);
     $("#critfile").val(file);
-    $("#crits1getdesign").hide();
-    $("#crits1feedback").show();
-    window.open("/lesson/" + lessionid + "/action/showdesign");
+    $("#critsgetdesign").hide();
+    $("#critsshowdesign").show();
+    $("#critsfeedback").show();
+//     let path = "/lesson/" + lessonid + "/action/showdesign";
+//     console.log("LOAD ",path);
+//     window.open(path);
 }
 
 
 function handleFeedbackRequest(lessonid,div)
 {
 	let data = { };
-	fetch('/lesson/ + lessonid + "/action/getfeedback', {
+	fetch('/lesson/' + lessonid + '/action/getfeedback', {
 		method: 'POST',
 		headers: {
 			'Content-Type' : 'application/json'
@@ -154,7 +159,7 @@ function handleFeedbackRequest(lessonid,div)
 
 function handleFeedbackRequest1(data)
 {
-   $("#" + data.div).html(data.html);
+   $("#feedbacktext").html(data.html);
 }
 
 

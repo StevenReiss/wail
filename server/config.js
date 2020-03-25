@@ -13,7 +13,7 @@
 /*										*/
 /********************************************************************************/
 
-const sanitize_html = require('sanitize-html');
+const sanitizeHtml = require('sanitize-html');
 const fs = require('fs');
 
 
