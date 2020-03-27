@@ -27,8 +27,9 @@ const LessonBase = require("./lessonbase.js").LessonBase;
 
 class DesignLesson extends LessonBase {
 
-   constructor(name,id) {
-	   super(name,id);
+   constructor(name,id,row) {
+           super(name,id);
+           this.crits_id = row.reference;
 	   }
 
    initializeLesson(next) {
@@ -50,7 +51,10 @@ class DesignLesson extends LessonBase {
    doAction(req,res,act) {
 	   if (act == 'upload') {
 	     handleUpload(req,res,this.lesson_id);
-	   }
+           }
+           else if (act == 'showfeedback') {
+             handleShowFeedback(req,res,this);      
+           }
     }
 
 }	// end of class DesignLesson
@@ -109,8 +113,7 @@ function handleUpload(req,res,id)
 
 
 function handleUpload1(req,res,id,err,data)
-{
-    let file = req.files.designfile.file;
+{    let file = req.files.designfile.file;
     let bannerid = req.session.user.bannerid;
     let cmd = "INSERT INTO DesignTable_" + id + "(bannerid,filename) VALUES($1,$2)";
     db.query(cmd,[bannerid,file],(e1,d1) => { handleUpload2(req,res,id,e1,d1); });
@@ -121,6 +124,20 @@ function handleUpload2(req,res,id,err,data)
 {
     res.redirect('/lessons');
 }
+
+
+/********************************************************************************/
+/*										*/
+/*	Action methods to show comments on a desgin				*/
+/*										*/
+/********************************************************************************/
+
+function handleShowFeedback(req,res,lesson)
+{
+        let data = { lesson_id : lesson.crits_id };
+        lesson.showPage(req,res,'designfeedback',data);  
+}
+
 
 
 

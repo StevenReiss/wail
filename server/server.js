@@ -24,6 +24,7 @@ const cookieparser = require('cookie-parser');
 const errorhandler = require('errorhandler');
 const logger = require('morgan');
 const fileUpload = require('express-fileupload');
+const favicons = require("connect-favicons");
 
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
@@ -52,6 +53,8 @@ function setup()
    app.engine('handlebars', handlebars.engine);
    app.set('view engine','handlebars');
    app.use(logger('combined'));
+
+   app.use(favicons(__dirname + config.STATIC));
    
    app.use('/static',express.static(__dirname + config.STATIC));
    app.get('/robots.txt',(req,res) => { res.redirect('/static/robots.txt')});
