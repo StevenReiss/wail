@@ -41,3 +41,4 @@ faitdbg.jar
 node_modules
 .wailpass
 passwords
+server/files
