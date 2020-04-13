@@ -91,3 +91,4 @@ VALUES
 EOF
 
 rm -rf ../server/files/*
+ssh bodognom-v2 rm -rf /vol/wail/server/files/*

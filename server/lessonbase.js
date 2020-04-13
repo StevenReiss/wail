@@ -84,8 +84,11 @@ function handlePage(req,res)
         console.log(req.params);
     let id = req.params.lessonid;
     let lesson = lessons[id];
-    console.log(id,lesson,lessons);
-    lesson.showLesson(req,res);
+    if (lesson == null) res.redirect("/lessons");
+    else {
+       console.log(id,lesson,lessons);
+       lesson.showLesson(req,res);
+    }
 }
 
 
@@ -94,7 +97,11 @@ function handleAction(req,res)
    let id = req.params.lessonid;
    let lesson = lessons[id];
    let act = req.params.action;
-   lesson.doAction(req,res,act);
+   
+   if (lesson == null) res.redirect("/lessons");
+   else {
+      lesson.doAction(req,res,act);
+   }
 }
 
 

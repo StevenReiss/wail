@@ -15,6 +15,7 @@
 /********************************************************************************/
 
 const db = require("./database.js");
+const config = require("./config.js");
 const LessonBase = require("./lessonbase.js").LessonBase;
 
 
