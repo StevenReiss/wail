@@ -28,10 +28,10 @@ of the name are not checked for embedded HTML.
 	</P><P>
 	  <FORM id='xssform' method='POST' action='/lesson/xss/action/showpage'>
 	  <LABEL class='inputlabel'>Enter Your Name:&nbsp;&nbsp;&nbsp;&nbsp;</LABEL>
-	  <INPUT id='sqlinjectionuser' type='text' name='name' size='80' placeholder='enter first name'>
+	  <INPUT id='sqlinjectionuser' type='text' name='name' size='100' placeholder='enter first name'>
 	  <BR>
 	  <LABEL class='inputlabel'>Private Information: </LABEL>
-	  <INPUT id='sqlinjectionpwd' type='text' name='secret' size='80' placeholder='enter secret info'>
+	  <INPUT id='sqlinjectionpwd' type='text' name='secret' size='100' placeholder='enter secret info'>
 	  <BR>
 	  <INPUT id='sqlinjectionsubmit' type='submit' value='Try It'/>
 	  </FORM>
