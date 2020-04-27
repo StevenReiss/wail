@@ -180,7 +180,7 @@ function handleTakeTest1(req,res,lesson,data)
       let idx = Math.floor(Math.random() * ln);
       let row = data.rows[idx];  
       page = 'showusertest';
-      db.query("UPDATE DesignTable_" + lesson.test_id +
+      db.query("UPDATE UserTestTable_" + lesson.test_id +
 		  " SET uses = $1 WHERE bannerid = $2",[use+1,row.bannerid]);
       rdata = { status: true,
 		project : row.project,
