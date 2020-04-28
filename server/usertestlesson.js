@@ -181,7 +181,7 @@ function handleTakeTest1(req,res,lesson,data)
       let row = data.rows[idx];  
       page = 'showusertest';
       db.query("UPDATE UserTestTable_" + lesson.test_id +
-		  " SET uses = $1 WHERE bannerid = $2",[use+1,row.bannerid]);
+		  " SET uses = $1 WHERE project = $2",[use+1,row.project]);
       rdata = { status: true,
 		project : row.project,
 		starturl : row.starturl,
