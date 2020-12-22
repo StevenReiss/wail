@@ -39,22 +39,51 @@ class LessonBase {
             this.lesson_id = id;
 	}
 
-	initializeLesson(next) { 
-           db.query("UPDATE lessons SET inited = true WHERE name = $1",[this.lesson_name],
-                (e1,d1) => { doNext(next) } );
+        initializeLesson(next) {
+                this.localInitializeLesson(() => { 
+                        db.query("UPDATE lessons SET inited = true WHERE name = $1",[this.lesson_name],
+                                (e1,d1) => { doNext(next) } ); } );
         }
 
-	enableLesson(next) {
-            db.query("UPDATE lessons SET enabled = true WHERE name = $1",[this.lesson_name],
-            (e1,d1) => { doNext(next) } );
-	}
+        enableLesson(next) {
+                this.localEnableLesson( () => {
+                      db.query("UPDATE lessons SET enabled = true WHERE name = $1",[this.lesson_name],
+                        (e1,d1) => { doNext(next) } );  
+                });
+        }
 
-	disableLesson(next) {
-            db.query("UPDATE lessons SET enabled = false WHERE name = $1",[this.lesson_name], 
+        resetLesson(next) {
+                this.localResetLesson( () => {
+                      db.query("UPDATE lessons SET enabled = true WHERE name = $1",[this.lesson_name],
+                        (e1,d1) => { doNext(next) } );  
+                });
+        }
+
+       disableLesson(next) {
+                this.localDisableLesson( () => {
+                      db.query("UPDATE lessons SET enabled = false WHERE name = $1",[this.lesson_name],
+                        (e1,d1) => { doNext(next) } );  
+                });
+        }
+
+        setActiveDate(date,next) {
+            db.query("UPDATE lessons SET active = $1 WHERE NAME = $2",[date,this.lesson_name],
             (e1,d1) => { doNext(next); } );
-	}
+        } 
 
-        showLesson(req,res) { }
+        localInitializeLesson(next) { doNext(next); }
+        localEnableLesson(next) { doNext(next); }
+        locatResetLesson(next) { doNext(next); }
+        localDisableLesson(next) { doNext(next); }
+
+        showLesson(req,res,data) { 
+           if (data == null) data = this.localGetLessonParameters();      
+           this.showPage(req,res,this.lesson_id + "lesson",data)      
+        }
+
+        localGetLessonParameters() {
+           return { };
+        }
         
         doAction(res,req,act) { }
 
@@ -67,6 +96,14 @@ class LessonBase {
            rdata.user = req.session.user;
            console.log("USE",rdata);
            res.render(id,rdata);
+        }
+
+        enterGrade(req,res,lesson,next) {
+           if (lesson instanceof Function) {
+                   next = lesson;
+                   lesson = this.lesson_id;
+           } 
+           setLessonGrade(req,res,lesson,next);    
         }
         
 }	// end of class LessonBase
@@ -110,7 +147,8 @@ function handleAdminAction(req,res)
    let id = req.body.lesson;
    let act = req.body.action;
    let lesson = lessons[id];
-   console.log("ADMINACTION",lesson.lesson_id,lesson.lesson_name,act);
+   console.log("ADMINACTION",id,act,req.params.action);
+  
    switch (act) {
            case 'ENABLE' :
                    lesson.enableLesson(() => { handleAdminAction1(req,res); });
@@ -121,14 +159,28 @@ function handleAdminAction(req,res)
            case 'INITIALIZE' :
                    lesson.initializeLesson( () => { handleAdminAction1(req,res); } );
                    break;
+           case 'RESET' :
+                   lesson.resetLesson(() => { handleAdminAction1(req,res); })
            default :
               res.redirect("/admin/home");
               break;
    }
+   lesson = lessons[id];
+   console.log("ADMINACTIONDONE",lesson);
 }
 
 
 function handleAdminAction1(req,res)
+{
+   let date = req.params.activedate;
+   if (date != null && date != '' && date != lesson.active) {
+      lesson.setActiveDate( () => { handleAdminAction2(req,res); });
+   }
+   else handleAdminAction2(req,res);
+}
+
+
+function handleAdminAction2(req,res)
 {
    res.redirect("/admin/home");    
 }
@@ -155,15 +207,16 @@ function setupLessons()
 
 function setupLessons0(next,reject)
 {
-   db.query("SELECT * from lessons order by number",(e1,d1) => { setupLessons1(e1,d1,next); });
+   db.query("SELECT * from lessons order by number",(e1,d1) => 
+       { setupLessons1(e1,d1,next); });
 }
 
 
 function setupLessons1(err,data,next,reject)
 {
     if (err != null) {
-            if (reject != null) reject(err);
-            return;
+        if (reject != null) reject(err);
+        return;
     }
 
     for (let row of data.rows) {
@@ -173,6 +226,35 @@ function setupLessons1(err,data,next,reject)
     }  
  
     if (next != null) next();  
+}
+
+
+
+/********************************************************************************/
+/*										*/
+/*	Handle grades								*/
+/*										*/
+/********************************************************************************/
+
+function setLessonGrade(req,res,lesson,next)
+{
+    db.query("DELETE FROM grades WHERE bannerid = $1 AND lesson = $2",
+        [req.session.user.bannerid,lesson],
+        (e1,d1) => { setLessonGrade1(req,res,lesson,next); });
+}
+
+
+function setLessonGrade1(req,res,lesson,next)
+{
+    db.query("INSERT INTO grades (bannerid,lesson) VALUES ($1,$2)",
+        [req.session.user.bannerid,lesson],
+        (e1,d1) => { setLessonGrade2(req,res,lesson,next); });     
+}
+
+
+function setLessonGrade2(req,res,lesson,next)
+{
+    if (next != null) next(req,res);    
 }
 
 

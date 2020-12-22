@@ -33,22 +33,8 @@ class CritsLesson extends LessonBase {
 	   this.design_id = row.reference;
 	   }
 
-   initializeLesson(next) {
-      initialize(this.lesson_id,() => { return super.initializeLesson(next); });
-   }
-
-   enableLesson(next) {
-      enabler(this.lesson_id,() => { return super.enableLesson(next); });
-   }
-
-   disableLesson(next) {
-	   super.disableLesson(next);
-   }
-
-   showLesson(req,res,data) {
-      if (data == null) data = { };
-      this.showPage(req,res,this.lesson_id + "lesson",data);
-   }
+   localInitializeLesson(next) { initialize(this,next); }
+   localResetLesson(next) { clearLesson(this,next); }
 
    doAction(req,res,act) {
       if (act == 'getdesign') {
@@ -76,8 +62,9 @@ class CritsLesson extends LessonBase {
 /*										*/
 /********************************************************************************/
 
-function initialize(id,next)
+function initialize(lesson,next)
 {
+   let id = lesson.lesson_id;
    db.query("DROP TABLE IF EXISTS CritsTable_" + id,(e1,d1) => { initialize1(id,next,e1,d1); } );
 }
 
@@ -101,8 +88,9 @@ function commandEnd(id,next,err,data)
 }
 
 
-function enabler(id,next)
+function clearLesson(lesson,next)
 {
+   let id = lesson.lesson_id;     
    db.query("DELETE FROM CritsTable_" + id,(e1,d1) => {  commandEnd(id,next,e1,d1); })
 }
 

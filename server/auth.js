@@ -41,7 +41,7 @@ function authenticate(req,res,next)
 
 function handleLogin(req,res)
 {
-   console.log("HANDLE LOGIN");
+   console.log("HANDLE LOGIN",req);
 
    let rslt = { }
    if (req.body.user == null || req.body.user == '') {

@@ -31,22 +31,8 @@ class SqlInjectionLesson extends LessonBase {
       super(name,id);
     }
 
-   initializeLesson(next) {
-	initialize(this.lesson_id,() => { return super.initializeLesson(next); });
-   }
-
-   enableLesson(next) {
-      super.enableLesson(next);
-   }
-
-   disableLesson(next) {
-      super.disableLesson(next);
-   }
-
-   showLesson(req,res) {
-      this.showPage(req,res,this.lesson_id + "lesson",{});
-   }
-
+   localInitializeLesson(next) { initialize(this,next); } 
+   
    doAction(req,res,act) {
       if (act == 'attempt') {
 	 handleAttempt(req,res,this);
@@ -67,33 +53,36 @@ class SqlInjectionLesson extends LessonBase {
 /*										*/
 /********************************************************************************/
 
-function initialize(id,next)
+function initialize(lesson,next)
 {
-   db.query("DROP TABLE IF EXISTS SqlLogin_" + id,(e1,d1) => { initialize1(id,next,e1,d1); } );
+   let id = lesson.lesson_id;     
+   db.query(`DROP TABLE IF EXISTS SqlLogin_${id}`,(e1,d1) => { initialize1(lesson,next,e1,d1); } );
 }
 
 
-function initialize1(id,next,err,data)
+function initialize1(lesson,next,err,data)
 {
-   let cmd = "CREATE TABLE SqlLogin_" + id + "( ";
+   let id = lesson.lesson_id;     
+   let cmd = `CREATE TABLE SqlLogin_${id}( `;
    cmd += " user character(32), ";
    cmd += " pwd character(32), ";
    cmd += " admin boolean";
    cmd += ");";
-   db.query(cmd,(e1,d1) => { initialize2(id,next,e1,d1); } );
+   db.query(cmd,(e1,d1) => { initialize2(lesson,next,e1,d1); } );
 }
 
 
-function initialize2(id,next,err,data)
+function initialize2(lesson,next,err,data)
 {
+   let id = lesson.lesson_id;     
    let cmd = "INSERT INTO SqlLogin_" + id + " (user,pwd,admin) VALUES ";
    cmd += ' ( "spr", "fdajkfdajkd;fei4784m,v", true ), ';
    cmd += ' ( "user234", "mypasswordgoeshere", false ); ';
-   db.query(cmd,(e1,d1) => { commandEnd(id,next,e1,d1); } );
+   db.query(cmd,(e1,d1) => { commandEnd(lesson,next,e1,d1); } );
 }
 
 
-function commandEnd(id,next,err,data)
+function commandEnd(lesson,next,err,data)
 {
    if (next != null) next();
 }

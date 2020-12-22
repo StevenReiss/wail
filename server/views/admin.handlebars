@@ -14,6 +14,7 @@
 	      <OPTION value='ENABLE'>ENABLE</OPTION>
 	      <OPTION value='DISABLE'>DISABLE</OPTION>
 	      <OPTION value='INITIALIZE'>INITIALIZE</OPTION>
+              <OPTION value='RESET'>ENABLE & RESET</OPTION>
       </SELECT>
       <br>
       <INPUT id='adminsubmit' type='submit' value='Do Action' />
@@ -24,18 +25,22 @@
    <FORM id='adminform_{{id}}' action='/admin/action/update' method='post'>
       <LABEL>Lesson {{name}}: </LABEL>
       <INPUT type='hidden' name='lesson' value='{{id}}' />
-{{#if inited}}
+ {{#if inited}}
  {{#if enabled}}
       <INPUT type='hidden' name='action' value='DISABLE' />
       <INPUT type='submit' value='DISABLE' />
  {{else}}
-      <INPUT type='hidden' name='action' value='ENABLE' />
+      <SELECT id='adminenabler' name='action'>
+              <OPTION value='ENABLE'>CONTINUE</OPTION>
+              <OPTION value='RESET'>RESET</OPTION>
+      </SELECT>
       <INPUT type='submit' value='ENABLE' />
  {{/if}}
 {{else}}
       <INPUT type='hidden' name='action' value='INITIALIZE' />
       <INPUT type='submit' value='INITIALIZE' />
 {{/if}}
+   <SPAN>Active Date: </SPAN><INPUT TYPE='date' name='activedate' value='{{activedate}}'/>
    </FORM>
    </DIV>
    {{/lessons}}
@@ -59,7 +64,11 @@
       <LABEL class='newlabel'>Reference Lesson:</LABEL>
       <INPUT type='text' id='newref'/>
       <BR>
-
+      <LABEL class='newlabel'>Active Date:</LABEL>
+      <INPUT type='date' id='newdate'/>
+      <BR>
+      <INPUT type='hidden' name='action' value='NEW' />
+      <SPAN id='newlessonerror' class='error hidden'></SPAN> 
       <INPUT id='newsubmit' type='submit' value='Add Lesson' />
    </FORM>
 </DIV>
@@ -68,4 +77,12 @@
 <DIV class='admin3'>
 <A href='/home'>Log Out of Admin</A>
 </DIV>
+
+<SCRIPT>
+
+$(function() {
+        $("#newlesson").submit(event => checkNewLesson(event));
+});
+
+</SCRIPT>
 </BODY>

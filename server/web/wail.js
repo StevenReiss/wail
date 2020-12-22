@@ -221,6 +221,37 @@ function handleSqlInjectionSubmit1(data)
 }
 
 
+/****************************************************************************************/
+/*											*/
+/*	Admin checking methods  							*/
+/*											*/
+/****************************************************************************************/
+
+function checkNewLesson(evt)
+{
+    let err = null;
+    let lbl = $("#newid").val();
+    if (lbl == null || lbl == '') return newLessonError(evt,'Label must not be null');   
+    let name = $("#newname").val();
+    if (name == null || name == '') return newLessonError(evt,"Name must not be null)");
+    let desc = $("#newdesc").val();
+    if (desc == null || desc.length() < 5) 
+        return newLessonError(evt,"Description must be present");
+    let mod = $("#newmodule").val();
+    if (mod == null || mod == '') return newLessonError(evt,"Module must be specified");
+    let dat = $("#newdate").val();
+    if (dat == null) return newLessonError(evt,"Date must be specified");
+}
+
+
+
+function newLessonError(evt,msg)
+{
+   setErrorField(msg,'newlessonerror');
+   evt.preventDefault();     
+}
+
+
 
 /* end of wail.js */
 

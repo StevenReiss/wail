@@ -22,13 +22,18 @@ CREATE TABLE students (
 );
 
 
-
-
 CREATE TABLE admin (
    id character(16),
    password character(64)
 );
 
+
+CREATE TABLE grades (
+   bannerid character(16) NOT NULL,
+   lesson character(64) NOT NULL,
+   finished timestamp default CURRENT_TIMESTAMP,
+   PRIMARY KEY (bannerid,lesson)
+);
 
 
 CREATE TABLE lessons (
@@ -40,7 +45,7 @@ CREATE TABLE lessons (
    reference character(16),
    enabled boolean DEFAULT false,
    inited boolean DEFAULT false,
-
+   active date DEFAULT (DATE_FORMAT(NOW(), '%Y-%m-%d')),
    PRIMARY KEY ( number )
 );
 CREATE INDEX lessonNameIndex on lessons(name);
@@ -66,10 +71,8 @@ VALUES
    ("SQL Injection", "sqlinjection", "sqlinjectionlesson", NULL, "SQL Injection Attacks" ),
    ("XSS Attack", "xss", "xsslesson", NULL, "Cross-Site Scripting Attacks" ),
    ("Define User Test", "usertest1", "usertestlesson", NULL, "Define a user test for your final project" ),
-   ('Take a User Test', 'taketest1', 'usertestlesson', 'usertest1', "Take a uesr test for another project" );
-
-
-
+   ('Take a User Test', 'taketest1', 'usertestlesson', 'usertest1', "Take a uesr test for another project" ),
+   ('Html Css Lab','htmlcss', 'frontendlesson', NULL, "Lesson support for Html/Css Lab" );
 EOF
 
 csh ~/courses/cs132/students.sql
@@ -91,4 +94,4 @@ VALUES
 EOF
 
 rm -rf ../server/files/*
-ssh bodognom-v2 rm -rf /vol/wail/server/files/*
+ssh -t pk-ssh.cs.brown.edu "ssh bdognom-v2 rm -rf '/vol/wail/server/files/*'"

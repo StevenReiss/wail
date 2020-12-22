@@ -19,6 +19,7 @@ const handlebars = exphbs.create( { defaultLayout : 'main'});
 
 const bodyparser = require('body-parser');
 const busboy = require('express-busboy');
+const multer = require('multer');
 const session = require('express-session');
 const cookieparser = require('cookie-parser');
 const errorhandler = require('errorhandler');
@@ -63,6 +64,7 @@ function setup()
         upload : true,
         path: __dirname + "/files"
     });
+   const upload = multer( { dest:  __dirname + '/files'});
 
    // app.use(cookieparser(config.SESSION_KEY));
    
@@ -77,16 +79,16 @@ function setup()
    app.get("/home",displayHomePage);
    app.get("/index",displayHomePage);
 
-   app.post("/login",auth.handleLogin);
+   app.post("/login",upload.none(),auth.handleLogin);
 
    app.use(auth.authenticate);
 
    app.all("/lessons",displayLessonsPage);
    app.all("/lesson/:lessonid/page",lessonbase.handlePage);
-   app.all("/lesson/:lessonid/action/:action",lessonbase.handleAction);
+   app.all("/lesson/:lessonid/action/:action",upload.any(),lessonbase.handleAction);
 
    app.get("/admin/home",admin.displayAdminPage);
-   app.post("/admin/action/:action",admin.handleAdminAction);
+   app.post("/admin/action/:action",upload.any(),admin.handleAdminAction);
 
    app.all('*',handle404);
    app.use(errorHandler);
@@ -131,7 +133,7 @@ function displayHomePage(req,res)
 
 function displayLessonsPage(req,res)
 {
-   db.query("SELECT * FROM lessons ORDER BY number",(e1,d1) => { displayLessonsPage1(req,res,e1,d1) } );
+   db.query("SELECT * FROM lessons ORDER BY active,number",(e1,d1) => { displayLessonsPage1(req,res,e1,d1) } );
 }
 
 

@@ -33,21 +33,8 @@ class UserTestLesson extends LessonBase {
            this.test_id = row.reference;
 	   }
 
-   initializeLesson(next) {
-      initialize(this,() => { return super.initializeLesson(next); });
-   }
-
-   enableLesson(next) {
-      enabler(this,() => { return super.enableLesson(next); });
-   }
-
-   disableLesson(next) {
-	   super.disableLesson(next);
-   }
-
-   showLesson(req,res) {
-      this.showPage(req,res,this.lesson_id + "lesson",{});
-   }
+   localInitializeLesson(next) { initialize(this,next); }        
+   localResetLesson(next) { clear(this,next); }
 
    doAction(req,res,act) {
       if (act == 'newtest') {
@@ -97,7 +84,7 @@ function commandEnd(id,next,err,data)
 }
 
 
-function enabler(lesson,next)
+function clear(lesson,next)
 {
    let id = lesson.lesson_id;    
    if (!id.startsWith("usertest")) return commandEnd(id,next);  

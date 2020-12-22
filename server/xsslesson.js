@@ -32,22 +32,6 @@ class XSSLesson extends LessonBase {
       super(name,id);
     }
 
-   initializeLesson(next) {
-      super.initializeLesson(next);
-   }
-
-   enableLesson(next) {
-      super.enableLesson(next);
-   }
-
-   disableLesson(next) {
-      super.disableLesson(next);
-   }
-
-   showLesson(req,res) {
-      this.showPage(req,res,this.lesson_id + "lesson",{});
-   }
-
    doAction(req,res,act) {
       if (act == 'showpage') {
 	 handleShowPage(req,res,this);
@@ -110,8 +94,3 @@ exports.Lesson = XSSLesson;
 
 
 /* end of xsslesson.js */
-
-
-
-
-
