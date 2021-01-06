@@ -77,12 +77,17 @@ class LessonBase {
         localDisableLesson(next) { doNext(next); }
 
         showLesson(req,res,data) { 
-           if (data == null) data = this.localGetLessonParameters();      
-           this.showPage(req,res,this.lesson_id + "lesson",data)      
+           if (data == null) {
+              this.localGetLessonParameters(req,res, 
+                  (req,res,data) => { this.showPage(req,res,this.lesson_id + "lesson", data); } );   
+           }  
+           else {
+              this.showPage(req,res,this.lesson_id + "lesson",data)      
+           }   
         }
 
-        localGetLessonParameters() {
-           return { };
+        localGetLessonParameters(req,res,next) {
+           if (next != null) next(req,res,{ });     
         }
         
         doAction(res,req,act) { }
@@ -98,12 +103,13 @@ class LessonBase {
            res.render(id,rdata);
         }
 
-        enterGrade(req,res,lesson,next) {
-           if (lesson instanceof Function) {
-                   next = lesson;
-                   lesson = this.lesson_id;
-           } 
-           setLessonGrade(req,res,lesson,next);    
+        enterGrade(req,res,what,next) {
+           if (what instanceof Function) {
+                next = what;
+                what = this.lesson_id;
+           }
+
+           setLessonGrade(req,res,this,what,next);    
         }
         
 }	// end of class LessonBase
@@ -236,23 +242,23 @@ function setupLessons1(err,data,next,reject)
 /*										*/
 /********************************************************************************/
 
-function setLessonGrade(req,res,lesson,next)
+function setLessonGrade(req,res,lesson,what,next)
 {
     db.query("DELETE FROM grades WHERE bannerid = $1 AND lesson = $2",
-        [req.session.user.bannerid,lesson],
-        (e1,d1) => { setLessonGrade1(req,res,lesson,next); });
+        [req.session.user.bannerid,what],
+        (e1,d1) => { setLessonGrade1(req,res,lesson,what,next); });
 }
 
 
-function setLessonGrade1(req,res,lesson,next)
+function setLessonGrade1(req,res,lesson,what,next)
 {
     db.query("INSERT INTO grades (bannerid,lesson) VALUES ($1,$2)",
-        [req.session.user.bannerid,lesson],
-        (e1,d1) => { setLessonGrade2(req,res,lesson,next); });     
+        [req.session.user.bannerid,what],
+        (e1,d1) => { setLessonGrade2(req,res,lesson,what,next); });     
 }
 
 
-function setLessonGrade2(req,res,lesson,next)
+function setLessonGrade2(req,res,lesson,what,next)
 {
     if (next != null) next(req,res);    
 }

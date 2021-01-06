@@ -91,7 +91,6 @@ function clear(lesson,next)
    db.query(`DELETE FROM DesignTable_${id}`,(e1,d1) => {  commandEnd(id,next,e1,d1); })
 }
 
-
 /********************************************************************************/
 /*										*/
 /*	Action	methods 							*/

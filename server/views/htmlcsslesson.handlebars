@@ -9,9 +9,40 @@ is to design a web interface that would let the user query this.
         <BR>
         <DIV class='lessoninput'>
         <BR>
-        <FORM id='htmlcssform' method='POST' action='/lesson/{{lesson_id}}/action/uploaddesign' enctype='multipart/form-data'>
+{{#if enabled}}   
+<DIV>
+        <P>
+        Specify the directory containing your html/css files or provide a zip file containing
+        that directory.
+        </P>
+</DIV>   
+        <FORM id='htmlcsswebform' method='POST' action='/lesson/{{lesson_id}}/action/uploadwebpage'
+                enctype='multipart/form-data'>
+                <INPUT TYPE='hidden' NAME='htmlcssgroup' value='{{gropu}}'>
+                <BR>
+                <SPAN>Compressed file: </SPAN><INPUT id='webfile1' name='webfile1' type='file' />
+                <SPAN id='htmlcsserror1' class='error hidden'>Bad Id</SPAN>
+                <BR>
+                <SPAN>Directory: </SPAN>
+                <INPUT id='webfile2' name='webfile2' type='file' multiple directory webkitdirectory mozdirectory />
+                <BR>
+{{#if useGit}} 
+                <SPAN>Git Branch</SPAN><input id='webfile3' name='webfile3' type='text' />
+                <BR>
+{{/if}}
+               <INPUT id='webfile2paths' name='webfile2paths' type='hidden' />
+                <INPUT id='htmlcsssubmit' type='submit' value='Submit' />
+        </FORM>
+{{else}}
+<DIV>
+        <P>
+                Specify the file containing your design sketch.  This can be an image file (e.g. a picture),
+                or it can be a PDF.
+        </P>
+</DIV>
+       <FORM id='htmlcssform' method='POST' action='/lesson/{{lesson_id}}/action/uploaddesign' enctype='multipart/form-data'>
                 <LABEL>Group ID:</LABEL>
-                <INPUT TYPE='text' NAME='htmlcssgroup'>
+                <INPUT TYPE='text' NAME='htmlcssgroup' required>
                 <BR>
                 <LABEL>Design file (pdf or image):</LABEL>
                 <INPUT id='htmlcssfile' name='htmlcssfile' type='file' accept='application/pdf,image/*' />
@@ -20,25 +51,10 @@ is to design a web interface that would let the user query this.
                 <BR>
                 <INPUT id='htmlcsssubmit' type='submit' value='Submit' />
         </FORM>
-
+{{/if}}
         <BR>
         
-        <FORM id='htmlcsswebform' method='POST' action='/lesson/{{lesson_id}}/action/uploadwebpage' enctype='multipart/form-data'>
-                <LABEL>Group ID:</LABEL>
-                <INPUT TYPE='text' NAME='htmlcssgroup'>
-                <BR>                
-                <SPAN>Compressed file: </SPAN><INPUT id='webfile1' name='webfile1' type='file'  />
-                <SPAN id='htmlcsserror1' class='error hidden'>Bad Id</SPAN>             
-                <BR>
-                <SPAN>Directory: </SPAN>
-                <INPUT id='webfile2' name='webfile2' type='file' multiple directory webkitdirectory mozdirectory />
-                <BR>
-                <SPAN>Git Branch</SPAN><input id='webfile3' name='webfile3' type='text' />
-                <INPUT id='webfile2paths' name='webfile2paths' type='hidden' />
-                <BR>
-                <INPUT id='htmlcsssubmit' type='submit' value='Submit' />
-        </FORM>
-
+ 
         </DIV>
 
 <SCRIPT>

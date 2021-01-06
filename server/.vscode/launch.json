@@ -11,7 +11,8 @@
                         "skipFiles": [
                                 "<node_internals>/**"
                         ],
-                        "program": "${workspaceFolder}/web/wail.js"
+                        "runtimeExecutable": "/usr/local/bin/node",
+                        "program": "${workspaceFolder}/server.js"
                 }
         ]
 }
