@@ -108,6 +108,7 @@ function clear(lesson,next)
 
 function checkStatus(req,res,lesson,next) 
 {
+   let id = lesson.lesson_id;
    let q = `SELECT F2.designfile,F2.group FROM FrontEndTable_${id} F1, FrontEndTable_${id} F2`;
    q += " WHERE F1.bannerid = $1 AND F1.group = F2.group AND F2.designfile != NULL";
   
