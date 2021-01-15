@@ -61,18 +61,18 @@ VALUES ( 'admin', 'cb7a5742346e1c8560443d0d9b4bb7e1d3426500709d924a2e9fa7dd36984
 
 
 
-INSERT INTO lessons (name,id,module,reference,description)
+INSERT INTO lessons (name,number,id,module,reference,description)
 VALUES
-   ('Html Css Lab','htmlcss', 'frontendlesson', NULL, "Lesson support for Html/Css Lab" ),
-   ("Design 1", "design1", "designlesson", NULL, "Quick Web Page Design Example" ),
-   ("Crits 1", "crits1", "critslesson", "design1", "Crits on Quick Web Page Design Example" ),
-   ("Design 2", "design2", "designlesson", 'crits1', "Quick Web Page Redesign Example" ),
-   ("Crits 2", "crits2", "critslesson", "design2", "Crits on Quick Web Page Redesign Example" ),
-   ("Design 3", "design3", "designlesson", 'crits2', "Quick Web Page Redesign Example" ),
-   ("SQL Injection", "sqlinjection", "sqlinjectionlesson", NULL, "SQL Injection Attacks" ),
-   ("XSS Attack", "xss", "xsslesson", NULL, "Cross-Site Scripting Attacks" ),
-   ("Define User Test", "usertest1", "usertestlesson", NULL, "Define a user test for your final project" ),
-   ('Take a User Test', 'taketest1', 'usertestlesson', 'usertest1', "Take a uesr test for another project" );
+   ('Html Css Lab',1,'htmlcss', 'frontendlesson', NULL, "Lesson support for Html/Css Lab" ),
+   ("Design 1",10,"design1", "designlesson", NULL, "Quick Web Page Design Example" ),
+   ("Crits 1",11, "crits1", "critslesson", "design1", "Crits on Quick Web Page Design Example" ),
+   ("Design 2", 12,"design2", "designlesson", 'crits1', "Quick Web Page Redesign Example" ),
+   ("Crits 2",13, "crits2", "critslesson", "design2", "Crits on Quick Web Page Redesign Example" ),
+   ("Design 3",14, "design3", "designlesson", 'crits2', "Quick Web Page Redesign Example" ),
+   ("SQL Injection",20,"sqlinjection", "sqlinjectionlesson", NULL, "SQL Injection Attacks" ),
+   ("XSS Attack",21, "xss", "xsslesson", NULL, "Cross-Site Scripting Attacks" ),
+   ("Define User Test",30, "usertest1", "usertestlesson", NULL, "Define a user test for your final project" ),
+   ('Take a User Test',31, 'taketest1', 'usertestlesson', 'usertest1', "Take a uesr test for another project" );
 EOF
 
 csh ~/courses/cs132/students.sql
