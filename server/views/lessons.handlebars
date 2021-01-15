@@ -1,6 +1,7 @@
 <BODY>
 <DIV class='lessons'>
         {{#lessons}}
+        {{#inited}}
         <P>
            {{#enabled}}
            <A class='activelesson' href="{{ url }}"> {{ name }}: {{description}} </A>  
@@ -8,6 +9,7 @@
            <SPAN class='inactivelesson'<>{{name}}: {{description}}</SPAN> 
             {{/enabled}}
         </P>
+        {{/inited}}
         {{/lessons}}
 </DIV>
 
