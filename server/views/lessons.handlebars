@@ -1,15 +1,15 @@
 <BODY>
 <DIV class='lessons'>
         {{#lessons}}
-        {{#inited}}
+        {{#if inited}}
         <P>
            {{#enabled}}
            <A class='activelesson' href="{{ url }}"> {{ name }}: {{description}} </A>  
            {{else}}
-           <SPAN class='inactivelesson'<>{{name}}: {{description}}</SPAN> 
+           <SPAN class='inactivelesson'<>{{name}} {{description}}</SPAN> 
             {{/enabled}}
         </P>
-        {{/inited}}
+        {{/if}}
         {{/lessons}}
 </DIV>
 
