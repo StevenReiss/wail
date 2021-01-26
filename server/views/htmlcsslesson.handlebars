@@ -20,7 +20,7 @@ is to design a web interface that would let the user query this.
                 enctype='multipart/form-data'>
                 <INPUT TYPE='hidden' NAME='htmlcssgroup' value='{{gropu}}'>
                 <BR>
-                <SPAN>Compressed file: </SPAN><INPUT id='webfile1' name='webfile1' type='file' />
+                <SPAN>Compressed (zip) file: </SPAN><INPUT id='webfile1' name='webfile1' type='file' />
                 <SPAN id='htmlcsserror1' class='error hidden'>Bad Id</SPAN>
                 <BR>
                 <SPAN>Directory: </SPAN>
@@ -45,7 +45,7 @@ is to design a web interface that would let the user query this.
                 <INPUT TYPE='text' NAME='htmlcssgroup' required>
                 <BR>
                 <LABEL>Design file (pdf or image):</LABEL>
-                <INPUT id='htmlcssfile' name='htmlcssfile' type='file' accept='application/pdf,image/*' />
+                <INPUT id='htmlcssfile' name='htmlcssfile' type='file' accept='application/pdf,image/*' multiple />
                 <BR>
                 <SPAN id='htmlcsserror' class='error hidden'>Bad Id</SPAN>
                 <BR>
