@@ -67,7 +67,8 @@ function setup()
    const upload = multer( { dest:  __dirname + '/files'});
 
    // app.use(cookieparser(config.SESSION_KEY));
-   
+   app.use(bodyparser.urlencoded({ extended : false}));
+
    app.use(session( { secret : config.SESSION_KEY,
 		store : new RedisStore({ client: redisClient }),
 		saveUninitialized : true,
