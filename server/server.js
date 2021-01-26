@@ -92,7 +92,8 @@ function setup()
                 { name: 'design2file', maxCount: 1 },
                 { name: 'design3file', maxCount: 1 },
         ]);
-   app.all("/lesson/:lessonid/action/:action",up1,lessonbase.handleAction);
+   app.post("/lesson/:lessonid/action/:action",upload.any(),lessonbase.handleAction);
+   app.get("/lesson/:lessonid/action/:action",upload.none(),lessonbase.handleAction);
 
    app.get("/admin/home",admin.displayAdminPage);
    app.post("/admin/action/:action",upload.any(),admin.handleAdminAction);
