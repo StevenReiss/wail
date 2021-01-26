@@ -152,6 +152,7 @@ function handleDesignUpload1(req,res,lesson,err,data)
 {
     let id = lesson.lesson_id;
     let file = null;
+    if (req.files != null) console.log("DFILES1",req.files[0]);
     if (req.file != null && req.file.htmlcssfile != null) file = req.file.htmlcssfile.file;
     else if (req.files.length > 0) file = req.files[0].path;
     let bannerid = req.session.user.bannerid;
