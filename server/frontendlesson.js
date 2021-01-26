@@ -139,7 +139,7 @@ function checkStatus1(req,res,lesson,next,err,data)
 
 function handleDesignUpload(req,res,lesson)
 {
-    console.log("DFILES",req.body,req.params,req.session.user,req.files);
+    console.log("DFILES",req.body,req.params,req.session.user,req.file,req.files);
 
     let id = lesson.lesson_id;
     db.query(`DELETE FROM FrontEndTable_${id} WHERE bannerid = $1`,
@@ -152,7 +152,7 @@ function handleDesignUpload1(req,res,lesson,err,data)
 {
     let id = lesson.lesson_id;
     let file = null;
-    if (req.files.htmlcssfile != null) file = req.files.htmlcssfile.file;
+    if (req.file != null && req.file.htmlcssfile != null) file = req.file.htmlcssfile.file;
     else if (req.files.length > 0) file = req.files[0].path;
     let bannerid = req.session.user.bannerid;
     let group = req.params.htmlcssgroup;
