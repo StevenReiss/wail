@@ -43,6 +43,8 @@ is to design a web interface that would let the user query this.
        <FORM id='htmlcssform' method='POST' action='/lesson/{{lesson_id}}/action/uploaddesign' enctype='multipart/form-data'>
                 <LABEL>Group ID:</LABEL>
                 <INPUT TYPE='text' NAME='htmlcssgroup' required>
+                <INPUT TYPE='hidden' NAME='htmlcssgroup1' value='testdata' />
+
                 <BR>
                 <LABEL>Design file (pdf or image):</LABEL>
                 <INPUT id='htmlcssfile' name='htmlcssfile' type='file' accept='application/pdf,image/*' />
