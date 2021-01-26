@@ -5,7 +5,9 @@ shift
 set lesson = $1
 shift
 
-set tgtdir = /pro/web/web/courses/cs132/lab_$lesson/g_$group
+set rsltdir = /pro/web/web/courses/cs132/results/lab_$lesson
+
+set tgtdir = $rsltdir/Group_$group
 set host = pk-ssh.cs.brown.edu
 
 
@@ -19,7 +21,7 @@ if ("X$1" == "X-x") then
    scp $1 ${host}:$tgtdir
    ssh $host ( cd $tgtdir; unzip $file
    echo handle compressed file
-else					
+else				
    while (( "$#" >= 2))
       set f = $1
       set tgt = $2
@@ -27,6 +29,16 @@ else
       shift 2
    end
 endif
+
+ssh $host (cd $rsltdir; ./updatedir.csh )
+
+
+
+
+
+
+
+
 
 
 
