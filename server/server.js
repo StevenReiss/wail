@@ -92,6 +92,8 @@ function setup()
                 { name: 'design2file', maxCount: 1 },
                 { name: 'design3file', maxCount: 1 },
         ]);
+
+   app.post("/lesson/:lessonid/action/uploaddesign",upload.single('htmlcssfile'),action('uploaddesign'));    
    app.post("/lesson/:lessonid/action/:action",upload.any(),lessonbase.handleAction);
    app.get("/lesson/:lessonid/action/:action",upload.none(),lessonbase.handleAction);
 
@@ -106,6 +108,10 @@ function setup()
 }
 
 
+function action(name)
+{
+        return (req,res,next) => { req.params.action = name; lessonbase.handleAction(req,res,next); };
+}
 
 /********************************************************************************/
 /*										*/
