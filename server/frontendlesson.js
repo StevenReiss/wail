@@ -68,7 +68,7 @@ function initialize1(lesson,next,err,data)
    let id = lesson.lesson_id;     
    let cmd = `CREATE TABLE FrontEndTable_${id}( `;
    cmd += " bannerid character(16), ";
-   cmd += " group character(128), ";
+   cmd += " groupid character(128), ";
    cmd += " designfile character(128) DEFAULT NULL, "
    cmd += " webdirectory character(128) DEFAULT NULL, "
    cmd += " finished boolean DEFAULT false, "
@@ -81,7 +81,7 @@ function initialize1(lesson,next,err,data)
 function initialize2(lesson,next,err,data)
 {
    let id = lesson.lesson_id;     
-   let cmd = `CREATE INDEX FrontEndGroupIndex_${id} on FrontEndTable_${id}(group)`;
+   let cmd = `CREATE INDEX FrontEndGroupIndex_${id} on FrontEndTable_${id}(groupid)`;
    db.query(cmd,(e1,d1) => { commandEnd(lesson,next,e1,d1); } );
 }
 
@@ -110,8 +110,8 @@ function clear(lesson,next)
 function checkStatus(req,res,lesson,next) 
 {
    let id = lesson.lesson_id;
-   let q = `SELECT F2.designfile,F2.group FROM FrontEndTable_${id} F1, FrontEndTable_${id} F2`;
-   q += " WHERE F1.bannerid = $1 AND F1.group = F2.group AND F2.designfile != NULL";
+   let q = `SELECT F2.designfile,F2.groupid FROM FrontEndTable_${id} F1, FrontEndTable_${id} F2`;
+   q += " WHERE F1.bannerid = $1 AND F1.groupid = F2.groupid AND F2.designfile != NULL";
   
    db.query(q,
         [ req.session.user.bannerid],
@@ -156,7 +156,7 @@ function handleDesignUpload1(req,res,lesson,err,data)
     else if (req.files.length > 0) file = req.files[0].path;
     let bannerid = req.session.user.bannerid;
     let group = req.params.htmlcssgroup;
-    let cmd = `INSERT INTO FrontEndTable_${id} (bannerid,group,designfile) VALUES($1,$2,$3)`;
+    let cmd = `INSERT INTO FrontEndTable_${id} (bannerid,groupid,designfile) VALUES($1,$2,$3)`;
     db.query(cmd,[bannerid,group,file], 
         (e1,d1) => { handleDesignUpload2(req,res,lesson,e1,d1); } );
 }
