@@ -228,6 +228,7 @@ function uploadDirectory(files,req,res,lesson)
 
    // run uploader with args
    handleUpload(args,req,res,lesson);
+
 }
 
 
@@ -246,9 +247,18 @@ function handleUpload(args,req,res,lesson)
 
 function handleUpload1(err,stdout,stderr,req,res,lesson)
 {
-	console.log("UPLOAD",err,stdout,stderr);
-	// res.redirect('/lessons');
+        console.log("UPLOAD",err,stdout,stderr);
+        lesson.enterGrade(req,res,lesson.lesson_id + "website",
+	        ()  => { handleUpload2(req,res,lesson); });
 }
+
+
+function handleUpload2(req,res,lesson)
+{
+        // res.redirect('/lessons');
+}
+
+
 
 /********************************************************************************/
 /*										*/
