@@ -143,7 +143,7 @@ function handleDesignUpload(req,res,lesson)
 
     let id = lesson.lesson_id;
     db.query(`DELETE FROM FrontEndTable_${id} WHERE bannerid = $1`,
-        [req.sesson.user.bannerid],
+        [req.session.user.bannerid],
         (e1,d1) => { handleDesignUpload1(req,res,lesson,e1,d1); } );
 }
 
