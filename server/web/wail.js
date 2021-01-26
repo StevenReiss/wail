@@ -19,7 +19,7 @@ function handleLoginEnter(evt)
    if (evt.keyCode == 13 || evt.keyCode == 9) {
       evt.preventDefault();
       $('#loginsubmit').click();
-   }	
+   }
 }
 
 function handleLoginSubmit(evt)
@@ -32,7 +32,7 @@ function handleLoginSubmit(evt)
       if (!$('#loginpwd').is(":visible")) {
 	 $('#loginpwd').show();
 	 return;
-      } 
+      }
       p = $('#loginpwd').val();
       if (p == null || p == '') return setLoginError('Must specify password for admin');
       let bits = sjcl.hash.sha256.hash(p);
@@ -92,7 +92,7 @@ function handleDesignSubmit(evt,filefield,errorfield)
 	setErrorField("Must specify file before proceeding",errorfield);
 	evt.preventDefault();
    }
-   let files = $('#htmlcssfile');
+   let files = $('#htmlcssfile'); 
    console.log(files);
 }
 
@@ -106,7 +106,7 @@ function handleDesignSubmit(evt,filefield,errorfield)
 
 function handleCritsGetDesign(evt,lessonid)
 {
-        evt.preventDefault();
+	evt.preventDefault();
 	let data = { };
 	fetch('/lesson/' + lessonid + "/action/getdesign", {
 		method: 'POST',
@@ -123,12 +123,12 @@ function handleCritsGetDesign(evt,lessonid)
 
 function handleCritsGetDesign1(resp)
 {
-        console.log("CRITSGET",resp);
+	console.log("CRITSGET",resp);
     let sts = resp.status;
     $("#getdesignerror").hide();
     if (sts == 'NONE') {
-        $("#getdesignerror").show();
-        return;
+	$("#getdesignerror").show();
+	return;
     }
     let bannerid = resp.bannerid;
     let file = resp.file;
@@ -154,8 +154,8 @@ function handleFeedbackRequest(lessonid,div)
 		},
 		body: JSON.stringify(data) } )
 	.then( (resp) => { let v = resp.json(); v.div = div; return v; } )
-	.then( handleFeedbackRequest1 ) 
-	.catch( (e) => { throw e; } );	
+	.then( handleFeedbackRequest1 )
+	.catch( (e) => { throw e; } );
 }
 
 
@@ -225,7 +225,7 @@ function handleSqlInjectionSubmit1(data)
 
 /****************************************************************************************/
 /*											*/
-/*	Admin checking methods  							*/
+/*	Admin checking methods								*/
 /*											*/
 /****************************************************************************************/
 
@@ -233,12 +233,12 @@ function checkNewLesson(evt)
 {
     let err = null;
     let lbl = $("#newid").val();
-    if (lbl == null || lbl == '') return newLessonError(evt,'Label must not be null');   
+    if (lbl == null || lbl == '') return newLessonError(evt,'Label must not be null');
     let name = $("#newname").val();
     if (name == null || name == '') return newLessonError(evt,"Name must not be null)");
     let desc = $("#newdesc").val();
-    if (desc == null || desc.length() < 5) 
-        return newLessonError(evt,"Description must be present");
+    if (desc == null || desc.length() < 5)
+	return newLessonError(evt,"Description must be present");
     let mod = $("#newmodule").val();
     if (mod == null || mod == '') return newLessonError(evt,"Module must be specified");
     let dat = $("#newdate").val();
@@ -250,85 +250,9 @@ function checkNewLesson(evt)
 function newLessonError(evt,msg)
 {
    setErrorField(msg,'newlessonerror');
-   evt.preventDefault();     
+   evt.preventDefault();
 }
 
 
 
 /* end of wail.js */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
