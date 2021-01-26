@@ -156,7 +156,7 @@ function handleDesignUpload1(req,res,lesson,err,data)
     else if (req.files != null && req.files.htmlcssfile != null) file = req.files.htmlcssfile.file;
     else if (req.files.length > 0) file = req.files[0].path;
     let bannerid = req.session.user.bannerid;
-    let group = req.params.htmlcssgroup;
+    let group = req.body.htmlcssgroup;
     let cmd = `INSERT INTO FrontEndTable_${id} (bannerid,groupid,designfile) VALUES($1,$2,$3)`;
     db.query(cmd,[bannerid,group,file], 
         (e1,d1) => { handleDesignUpload2(req,res,lesson,e1,d1); } );
