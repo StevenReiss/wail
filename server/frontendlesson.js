@@ -16,6 +16,7 @@
 
 const db = require("./database.js");
 const LessonBase = require("./lessonbase.js").LessonBase;
+const process = require('child_process');
 
 
 
@@ -146,6 +147,7 @@ function handleDesignUpload(req,res,lesson)
         (e1,d1) => { handleDesignUpload1(req,res,lesson,e1,d1); } );
 }
 
+
 function handleDesignUpload1(req,res,lesson,err,data)
 {
     let id = lesson.lesson_id;
@@ -198,10 +200,10 @@ function handleWebUpload(req,res,lesson)
 
 function uploadCompressed(file,group,req,res,lesson)
 {
-        args = [ "-x", group, file ];
+        args = [ group, lesson.lesson_name, "-x", file ];
 
-        // run uploader with args
-      res.redirect('/lessons');  
+        handleUpload(args,req,res,lesson);
+       
 }
   
 
@@ -212,16 +214,31 @@ function uploadDirectory(files,req,res,lesson)
    let args = [];
 
    args.push(group);
+   args.push(lesson.lesson_name);
    for (let i = 0; i < files.length; ++i) {
            args.push(files[i].path);
            args.push(paths[i]);
    }
 
    // run uploader with args
-
-   res.redirect('/lessons');
+   handleUpload(args,req,res,lesson);
 }
 
+
+
+function handleUpload(args,req,res,lesson)
+{
+   process.execFile("uploadwebfiles.csh",args,{ windowHide: true},
+        (err,stdout,stderr) => { handleDesignUpload1(err,stdout,stderr,req,res,lesson); });
+}
+
+
+
+function handleUpload1(err,stdout,stderr,req,res,lesson)
+{
+        console.log("UPLOAD",err,stdout,stderr);
+        res.redirect('/lessons');
+}
 
 /********************************************************************************/
 /*										*/
