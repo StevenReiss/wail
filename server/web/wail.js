@@ -92,6 +92,8 @@ function handleDesignSubmit(evt,filefield,errorfield)
 	setErrorField("Must specify file before proceeding",errorfield);
 	evt.preventDefault();
    }
+   let files = $('#htmlcssfile');
+   console.log(files);
 }
 
 
