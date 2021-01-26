@@ -150,6 +150,7 @@ function handleDesignUpload(req,res,lesson)
 
 function handleDesignUpload1(req,res,lesson,err,data)
 {
+        console.log("DESIGN",req.files)
     let id = lesson.lesson_id;
     let file = null;
     if (req.files.htmlcssfile != null) file = req.files.htmlcssfile.file;
