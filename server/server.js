@@ -85,7 +85,14 @@ function setup()
 
    app.all("/lessons",displayLessonsPage);
    app.all("/lesson/:lessonid/page",lessonbase.handlePage);
-   app.all("/lesson/:lessonid/action/:action",upload.any(),lessonbase.handleAction);
+
+   let up1 = upload.fields([ { name: 'htmlcssfile', maxCount: 1 }, 
+                { name: 'webfile2', maxCount: 20 } ,
+                { name: 'design1file', maxCount: 1 },
+                { name: 'design2file', maxCount: 1 },
+                { name: 'design3file', maxCount: 1 },
+        ]);
+   app.all("/lesson/:lessonid/action/:action",up1,lessonbase.handleAction);
 
    app.get("/admin/home",admin.displayAdminPage);
    app.post("/admin/action/:action",upload.any(),admin.handleAdminAction);
