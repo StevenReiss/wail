@@ -1,81 +1,84 @@
 <BODY>
-        <H1>HTML/CSS Design Example</H1>
-        <DIV class='lessontask'>
-                <P>
+	<H1>HTML/CSS Design Example</H1>
+	<DIV class='lessontask'>
+		<P>
 I have a database of all the CDs that have been published (2.5+ million).  Your job
-is to design a web interface that would let the user query this.                         
-                </P>
-        </DIV>
-        <BR>
-        <DIV class='lessoninput'>
-        <BR>
-{{#if enabled}}   
+is to design a web interface that would let the user query this.
+		</P>
+	</DIV>
+	<BR>
+	<DIV class='lessoninput'>
+	<BR>
+{{#if designed}}
 <DIV>
-        <P>
-        Specify the directory containing your html/css files or provide a zip file containing
-        that directory.
-        </P>
-</DIV>   
-        <FORM id='htmlcsswebform' method='POST' action='/lesson/{{lesson_id}}/action/uploadwebpage'
-                enctype='multipart/form-data'>
-                <INPUT TYPE='hidden' NAME='htmlcssgroup' value='{{gropu}}'>
-                <BR>
-                <SPAN>Compressed (zip) file: </SPAN><INPUT id='webfile1' name='webfile1' type='file' />
-                <SPAN id='htmlcsserror1' class='error hidden'>Bad Id</SPAN>
-                <BR>
-                <SPAN>Directory: </SPAN>
-                <INPUT id='webfile2' name='webfile2' type='file' multiple directory webkitdirectory mozdirectory />
-                <BR>
-{{#if useGit}} 
-                <SPAN>Git Branch</SPAN><input id='webfile3' name='webfile3' type='text' />
-                <BR>
+	<P>
+	Specify the directory containing your html/css files or provide a zip file containing
+	that directory.
+	</P>
+</DIV>
+	<FORM id='htmlcsswebform' method='POST' action='/lesson/{{lesson_id}}/action/uploadwebpage'
+		enctype='multipart/form-data'>
+		<INPUT TYPE='hidden' NAME='htmlcssgroup' value='{{group}}'>
+<!--		<BR>
+		<SPAN>Compressed (zip) file: </SPAN><INPUT id='webfile1' name='webfile1' type='file' />
+		<SPAN id='htmlcsserror1' class='error hidden'>Bad Id</SPAN>
+-->		<BR>
+		<SPAN>Directory: </SPAN>
+		<INPUT id='webfile2' name='webfile2' type='file' multiple directory webkitdirectory mozdirectory />
+		<BR>
+{{#if useGit}}
+		<SPAN>Git Branch</SPAN><input id='webfile3' name='webfile3' type='text' />
+		<BR>
 {{/if}}
-               <INPUT id='webfile2paths' name='webfile2paths' type='hidden' />
-                <INPUT id='htmlcsssubmit' type='submit' value='Submit' />
-        </FORM>
+	       <INPUT id='webfile2paths' name='webfile2paths' type='hidden' />
+		<INPUT id='htmlcsssubmit' type='submit' value='Submit' />
+	</FORM>
 {{else}}
 <DIV>
-        <P>
-                Specify the file containing your design sketch.  This can be an image file (e.g. a picture),
-                or it can be a PDF.
-        </P>
+	<P>
+		Specify the file containing your design sketch.  This can be an image file (e.g. a picture),
+		or it can be a PDF.
+	</P>
 </DIV>
        <FORM id='htmlcssform' method='POST' action='/lesson/{{lesson_id}}/action/uploaddesign' enctype='multipart/form-data'>
-                <LABEL>Group ID:</LABEL>
-                <INPUT TYPE='text' NAME='htmlcssgroup' required />
-                <INPUT TYPE='hidden' NAME='htmlcssgroup1' value='testdata' />
+		<LABEL>Group ID:</LABEL>
+		<INPUT TYPE='text' NAME='htmlcssgroup' required />
+		<INPUT TYPE='hidden' NAME='htmlcssgroup1' value='testdata' />
 
-                <BR>
-                <LABEL>Design file (pdf or image):</LABEL>
-                <INPUT id='htmlcssfile' name='htmlcssfile' type='file' accept='application/pdf,image/*' />
-                <BR>
-                <SPAN id='htmlcsserror' class='error hidden'>Bad Id</SPAN>
-                <BR>
-                <INPUT id='htmlcsssubmit' type='submit' value='Submit' />
-        </FORM>
+		<BR>
+		<LABEL>Design file (pdf or image):</LABEL>
+		<INPUT id='htmlcssfile' name='htmlcssfile' type='file' accept='application/pdf,image/*' />
+		<BR>
+		<SPAN id='htmlcsserror' class='error hidden'>Bad Id</SPAN>
+		<BR>
+		<INPUT id='htmlcsssubmit' type='submit' value='Submit' />
+	</FORM>
 {{/if}}
-        <BR>
-        
- 
-        </DIV>
+	<BR>
+
+
+	</DIV>
 
 <SCRIPT>
 
-        $(function () {
-                $("#htmlcssform").submit(event => handleDesignSubmit(event, 'htmlcssfile', 'htmlcsserror'));
-                // need to error check web form
-        });
+	$(function () {
+		$("#htmlcssform").submit(event => handleDesignSubmit(event, 'htmlcssfile', 'htmlcsserror'));
+		// need to error check web form
+	});
 
-        $(function () {
-                $("#htmlcsswebform").submit(function(e) {
-                        let files = $("#webfile2")[0].files;
-                        let paths = '';
-                        for (let i = 0, f; f = files[i]; ++i) {
-                                paths += files[i].webkitRelativePath+"###";   
-                        }
-                        $('#webfile2paths').val(paths);
-                });
-        });
+	$(function () {
+		$("#htmlcsswebform").submit(function(e) {
+			let files = $("#webfile2")[0].files;
+			let paths = '';
+			for (let i = 0, f; f = files[i]; ++i) {
+				let x = files[i].webkitRelativePath;
+				let x1 = x.indexOf('/');
+				let x2 = x.substr(x1+1);
+				paths += x2+"###";
+			}
+			$('#webfile2paths').val(paths);
+		});
+	});
 
 </SCRIPT>
 </BODY>
