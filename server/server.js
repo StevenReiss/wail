@@ -59,9 +59,8 @@ function setup()
    app.use('/static',express.static(__dirname + config.STATIC));
    app.get('/robots.txt',(req,res) => { res.redirect('/static/robots.txt')});
 
-// busboy.extend(app,{ upload : true, path: __dirname + "/files" });
    const upload = multer( { dest:  __dirname + '/files'});
-
+   const bparse = bodyparser.urlencode({ extended : false} );
    // app.use(cookieparser(config.SESSION_KEY));
    // app.use(bodyparser.urlencoded({ extended : false}));
 
@@ -76,7 +75,7 @@ function setup()
    app.get("/home",displayHomePage);
    app.get("/index",displayHomePage);
 
-   app.post("/login",upload.none(),auth.handleLogin);
+   app.post("/login",bparse,auth.handleLogin);
    app.use(auth.authenticate);
 
    app.all("/lessons",displayLessonsPage);
