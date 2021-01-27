@@ -61,6 +61,7 @@ function setup()
 
    const upload = multer( { dest:  __dirname + '/files'});
    const bparse = bodyparser.urlencode({ extended : false} );
+   const bparsej = bodyparser.json();
    // app.use(cookieparser(config.SESSION_KEY));
    // app.use(bodyparser.urlencoded({ extended : false}));
 
@@ -75,7 +76,7 @@ function setup()
    app.get("/home",displayHomePage);
    app.get("/index",displayHomePage);
 
-   app.post("/login",bparse,auth.handleLogin);
+   app.post("/login",bparsej,auth.handleLogin);
    app.use(auth.authenticate);
 
    app.all("/lessons",displayLessonsPage);
