@@ -42,8 +42,7 @@ function handleLoginSubmit(evt)
    fetch('/login', {
        method: 'POST',
        headers: {
-               'Content-Type': 'application/json; multipart/form-data; boundary=-------xxxxx--------',
-               
+	       'Content-Type': 'application/json'
        },
        body: JSON.stringify(data)  })
    .then( (resp) => { let v = resp.json(); return v; } )

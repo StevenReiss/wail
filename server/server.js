@@ -60,7 +60,7 @@ function setup()
    app.get('/robots.txt',(req,res) => { res.redirect('/static/robots.txt')});
 
    const upload = multer( { dest:  __dirname + '/files'});
-   const bparse = bodyparser.urlencode({ extended : false} );
+   const bparse = bodyparser.urlencoded({ extended : false} );
    const bparsej = bodyparser.json();
    // app.use(cookieparser(config.SESSION_KEY));
    // app.use(bodyparser.urlencoded({ extended : false}));
