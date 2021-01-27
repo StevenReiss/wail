@@ -64,7 +64,7 @@ function setup()
    const bparsej = bodyparser.json();
    // app.use(cookieparser(config.SESSION_KEY));
    // app.use(bodyparser.urlencoded({ extended : false}));
-
+   app.use(bodyparser.json());
    app.use(session( { secret : config.SESSION_KEY,
 		store : new RedisStore({ client: redisClient }),
 		saveUninitialized : true,
@@ -76,7 +76,7 @@ function setup()
    app.get("/home",displayHomePage);
    app.get("/index",displayHomePage);
 
-   app.post("/login",bparsej,auth.handleLogin);
+   app.post("/login",auth.handleLogin);
    app.use(auth.authenticate);
 
    app.all("/lessons",displayLessonsPage);
