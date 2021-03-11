@@ -25,5 +25,9 @@
       "redis": "^3.0.2",
       "sanitize-html": "^1.27.5",
       "serve-favicon": "^2.5.0"
+   },
+   "devDependencies": {
+      "eslint": "^7.19.0",
+      "eslint-plugin-vue": "^7.5.0"
    }
 }

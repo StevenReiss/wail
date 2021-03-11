@@ -47,7 +47,7 @@ class CritsLesson extends LessonBase {
 	 handleCritDesign(req,res,this);
        }
       else if (act == 'getfeedback') {
-	      handleCritFeedback(req,res,this);
+	handleCritFeedback(req,res,this);
       }
     }
 
@@ -190,8 +190,22 @@ function handleCritDesign(req,res,lesson)
 }
 
 
+function handleCritDesign1(req,res,lesson,err,data)
+{
+        let lid = 'critupload_' + lesson.lesson_id;
+        db.query("SELECT * FROM grades WHERE bannerid = $1 AND lesson = $2",
+        [req.session.user.bannerid,what,lid],
+        (e1,d1) => { handleCritsDesign2(req,res,lesson,e1,d1); } );    
+}
 
-function handleCritsDesign1(req,res,lesson,err,data)
+function handleCritsDesign2(req,res,lesson,err,data) 
+{
+        let lid = 'critupload_' + lesson.lesson_id;
+        if (data.rows.length > 0) lid = lid + "_2";
+        lesson.setLessonGrade(req,res,lesson,lid,handleCritsDesign3);
+}
+
+function handleCritsDesign3(req,res,lesson,err,data)
 {
    lesson.showPage(req,res,'designfeedback',{ });
 }
@@ -230,7 +244,7 @@ function handleCritFeedback2(req,res,lesson,err,data)
 		<h3>Dislikes</h3><p>${row.dislikes}<br>
 		<h3>Improvements</h3><p>${row.improve}<br>`;
     }
-    console.log("FEEDBACK RESULT",rslt);
+   console.log("FEEDBACK RESULT",rslt);
    let ret = { html: rslt };
    res.end(JSON.stringify(ret));
 }

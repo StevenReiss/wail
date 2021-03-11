@@ -121,6 +121,8 @@ function handleAttempt1(req,res,lesson,cmd,err,data)
       rslt = { login: false, status: "TOOMANY", query: cmd, message: "Too many rows returned", rows: data.rows };
     }
    res.end(JSON.stringify(rslt));
+
+   lesson.setLessonGrade(req,res,lesson,lession.lesson_id);
 }
 
 
