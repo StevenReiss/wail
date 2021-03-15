@@ -262,7 +262,7 @@ function setLessonGrade1(req,res,lesson,what,next)
 
 function setLessonGrade2(req,res,lesson,what,next)
 {
-    if (next != null) next(req,res);
+    if (next != null) next(req,res,lesson);
 }
 
 

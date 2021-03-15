@@ -172,7 +172,7 @@ function handleDesignUpload1(req,res,lesson,err,data)
 function handleDesignUpload2(req,res,lesson,err,data)
 {
 	lesson.enterGrade(req,res,lesson.lesson_id + "design",
-	()  => { handleDesignUpload3(req,res,lesson); });
+	        ()  => { handleDesignUpload3(req,res,lesson); });
 }
 
 
