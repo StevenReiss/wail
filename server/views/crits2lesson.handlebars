@@ -22,13 +22,15 @@ Remember that you will be getting comments as well.
                 </DIV>
         </DIV>
         <DIV id='critsshowdesign' class='lessoninput hidden'>
-                <FORM id='crits2show' method='POST' target='_blank' action='/lesson/{{lesson_id}}/action/showdesign'>
+                <FORM id='crits2show' method='POST'  enctype='multipart/form-data' 
+                         target='_blank' action='/lesson/{{lesson_id}}/action/showdesign'>
                    <INPUT id='crits2showsub' type='submit' value='Show Design' />
                 </FORM>
         </DIV>
         <BR>
         <DIV id='critsfeedback' class='lessoninput'>
-                <FORM id='crits2res' method='POST' action='/lesson/{{lesson_id}}/action/critdesign'>
+                <FORM id='crits2res' method='POST'  enctype='multipart/form-data' 
+                        action='/lesson/{{lesson_id}}/action/critdesign'>
                 <INPUT id='critid' name='critid' type='hidden' />
                 <INPUT id='critfile' name='critfile' type='hidden' />
                 <LABEL class='inputlabel'>What I like about the design:</LABEL>

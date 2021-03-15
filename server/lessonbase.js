@@ -154,6 +154,7 @@ function handleAdminAction(req,res)
    let id = req.body.lesson;
    let act = req.body.action;
    let lesson = lessons[id];
+   console.log("ADMIN ACT",req);
    console.log("ADMINACTION",id,act,req.params.action);
 
    switch (act) {

@@ -3,26 +3,10 @@
 <H1>Administration Page for WAIL</H1>
 <H2>Actions for existing Lessons</H2>
 <DIV class='admin1'>
-   {{!-- <FORM id='adminform' action='/admin/action/update' method='post'>
-      Lesson: <SELECT id='lessonchoice' name='lesson'>
-	      {{#lessons}}
-	      <OPTION value='{{id}}'>{{name}}</OPTION>
-	      {{/lessons}}
-      </SELECT>
-      &nbsp;&nbsp;Action:
-      <SELECT id='lessonaction' name='action'>
-	      <OPTION value='ENABLE'>ENABLE</OPTION>
-	      <OPTION value='DISABLE'>DISABLE</OPTION>
-	      <OPTION value='INITIALIZE'>INITIALIZE</OPTION>
-              <OPTION value='RESET'>ENABLE & RESET</OPTION>
-      </SELECT>
-      <br>
-      <INPUT id='adminsubmit' type='submit' value='Do Action' />
-   </FORM> --}}
-
    {{#lessons}}
    <DIV>
-   <FORM id='adminform_{{id}}' action='/admin/action/update' method='post'>
+   <FORM id='adminform_{{id}}' action='/admin/action/update' 
+                method='POST' enctype='multipart/form-data'>
       <LABEL>Lesson {{name}}: </LABEL>
       <INPUT type='hidden' name='lesson' value='{{id}}' />
  {{#if inited}}
@@ -48,7 +32,8 @@
 <BR>
 <H2>Create a new lesson</H2>
 <DIV class='admin2'>
-   <FORM id='newlesson' action='/admin/action/new' method='post'>
+   <FORM id='newlesson' action='/admin/action/new' 
+                method='POST'  enctype='multipart/form-data'>
       <LABEL class='newlabel'>Id:</LABEL>
       <INPUT type='text' id='newid'/>
       <BR>

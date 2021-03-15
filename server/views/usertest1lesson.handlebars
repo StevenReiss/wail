@@ -50,7 +50,7 @@ user testing, that is of creating these tests and then analyzing the results.
 	</DIV>
 	<BR>
 	<DIV class='lessoninput'>
-	     <FORM id='testcase1form' method='POST' action='/lesson/{{lesson_id}}/action/newtest'
+	     <FORM id='testcase1form' method='POST' enctype='multipart/form-data' action='/lesson/{{lesson_id}}/action/newtest'
 			enctype='multipart/form-data'>
 		<LABEL class='inputlabel'>Project Name: </LABEL>
 		<INPUT name='project' type='text' size='24' />

@@ -20,7 +20,7 @@ using it.
   </DIV>
   <BR>
   <DIV class='lessoninput'>
-          <FORM id='sqlinjectionform' method='POST'>
+          <FORM id='sqlinjectionform' method='POST' enctype='multipart/form-data'>
           <LABEL class='inputlabel'>User Name: </LABEL>
           <INPUT id='sqlinjectionuser' type='text' name='username' size='80' placeholder='enter user name'>
           <BR>
@@ -54,7 +54,7 @@ using it.
                   </P>
                   <P id='adminpriv' class='hidden'>And you have administrative privileges.</P>
                   <BR>
-                  <FORM id='sqlinjectiondone' method='POST' action='/lesson/{{lesson_id}}/action/done'>
+                  <FORM id='sqlinjectiondone' method='POST' enctype='multipart/form-data' action='/lesson/{{lesson_id}}/action/done'>
                   <INPUT id='donesubmit' type='submit' value='Finished Lesson'>
                   </FORM>
           </DIV>

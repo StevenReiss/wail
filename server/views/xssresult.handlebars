@@ -21,7 +21,7 @@ of the name are not checked for embedded HTML.
 	<P>
 	   Hello {{{user}}}.   Welcome to your secret data store.  Please confirm your information.
 	</P><P>
-	  <FORM id='xssform' method='POST' action='/lesson/xsslesson/action/done'>
+	  <FORM id='xssform' method='POST' enctype='multipart/form-data' action='/lesson/xsslesson/action/done'>
 	  <LABEL class='inputlabel'>Enter Your Name: </LABEL>
 	  <INPUT id='sqlinjectionuser' type='text' name='name' size='100' placeholder='enter first name'>
 	  <BR>
