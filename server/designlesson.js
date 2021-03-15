@@ -122,6 +122,7 @@ function handleUpload1(req,res,lesson,err,data)
 
 function handleUpload2(req,res,lesson,err,data)
 {
+    let id = lesson.lesson_id;
     lesson.setLessonGrade(req,res,id,'designupload',handleUpload3);    
 }
 
