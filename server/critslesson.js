@@ -202,7 +202,7 @@ function handleCritsDesign2(req,res,lesson,err,data)
 {
         let lid = 'critupload_' + lesson.lesson_id;
         if (data.rows.length > 0) lid = lid + "_2";
-        lesson.setLessonGrade(req,res,lesson,lid,handleCritsDesign3);
+        lesson.enterGrade(req,res,lesson,lid,handleCritsDesign3);
 }
 
 function handleCritsDesign3(req,res,lesson,err,data)
