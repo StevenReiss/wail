@@ -75,6 +75,7 @@ function setup()
    app.get("/",displayRootPage);
    app.get("/home",displayHomePage);
    app.get("/index",displayHomePage);
+   app.get("/logout",displayLogout);
 
    app.post("/login",auth.handleLogin);
    app.use(auth.authenticate);
@@ -130,6 +131,13 @@ function displayHomePage(req,res)
       rdata.user = req.session.user;
     }
    res.render('home',rdata);
+}
+
+
+
+function displayLogout(req,res){
+   req.session = null;
+   displayHomePage(req,res);
 }
 
 
