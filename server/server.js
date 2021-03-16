@@ -109,6 +109,7 @@ function action(name)
 	return (req,res,next) => { req.params.action = name; lessonbase.handleAction(req,res,next); };
 }
 
+
 /********************************************************************************/
 /*										*/
 /*	Basic Page routines							*/

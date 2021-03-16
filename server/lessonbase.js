@@ -154,7 +154,6 @@ function handleAdminAction(req,res)
    let id = req.body.lesson;
    let act = req.body.action;
    let lesson = lessons[id];
-   console.log("ADMIN ACT",req);
    console.log("ADMINACTION",id,act,req.params.action);
 
    switch (act) {
@@ -169,6 +168,7 @@ function handleAdminAction(req,res)
 		   break;
 	   case 'RESET' :
 		   lesson.resetLesson(() => { handleAdminAction1(req,res); })
+                   break;
 	   default :
 	      res.redirect("/admin/home");
 	      break;
