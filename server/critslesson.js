@@ -194,7 +194,7 @@ function handleCritsDesign1(req,res,lesson,err,data)
 {
         let lid = 'critupload_' + lesson.lesson_id;
         db.query("SELECT * FROM grades WHERE bannerid = $1 AND lesson = $2",
-        [req.session.user.bannerid,what,lid],
+        [req.session.user.bannerid,lid],
         (e1,d1) => { handleCritsDesign2(req,res,lesson,e1,d1); } );    
 }
 
