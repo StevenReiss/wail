@@ -61,6 +61,7 @@ function handleShowPage(req,res,lesson)
    let s = req.body.secret;
    let rdata = { firstname : u };
    lesson.showPage(req,res,'xsslesson',rdata);
+   enterGrade(req,res,lesson.lesson_id);
 }
 
 
