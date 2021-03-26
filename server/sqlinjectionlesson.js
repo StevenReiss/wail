@@ -122,7 +122,7 @@ function handleAttempt1(req,res,lesson,cmd,err,data)
     }
    res.end(JSON.stringify(rslt));
 
-   lesson.setLessonGrade(req,res,lesson,lession.lesson_id);
+   lesson.setLessonGrade(req,res,lesson,lesson.lesson_id);
 }
 
 
