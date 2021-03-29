@@ -97,6 +97,7 @@ class LessonBase {
 	showPage(req,res,id,rdata) {
 	   if (rdata == null) rdata = { };
 	   if (rdata.lesson_id == null) rdata.lesson_id = this.lesson_id;
+           if (rdata.title == null) rdata.title = this.lesson_name;
 	   rdata.lesson_name = this.lesson_name;
 	   rdata.user = req.session.user;
 	   console.log("USE",rdata);

@@ -44,7 +44,7 @@ class XSSLesson extends LessonBase {
        }
     }
 
-}	// end of class SqlInjectionLesson
+}	// end of class Cross Site Scriptiing Lesson
 
 
 
@@ -59,7 +59,7 @@ function handleShowPage(req,res,lesson)
 {
    let u = req.body.name;
    let s = req.body.secret;
-   let rdata = { firstname : u };
+   let rdata = { firstname : u, title : "XSS Test Page" };
    res.append("X-XSS-Protection","0");
    res.append("Content-Security-Policy","unsafe-inline");
    lesson.showPage(req,res,'xsslesson',rdata);
@@ -73,7 +73,7 @@ function handleAltPage(req,res,lesson)
    let s = req.body.secret;
    u = config.htmlSanitize(u);
 
-   let rdata = { user : u, secret: s };
+   let rdata = { user : u, secret: s, title: "XSS Success Page" };
    lesson.showPage(req,res,'xssresult',rdata);
 }
 

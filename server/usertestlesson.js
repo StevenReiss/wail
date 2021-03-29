@@ -170,6 +170,7 @@ function handleTakeTest1(req,res,lesson,data)
       db.query("UPDATE UserTestTable_" + lesson.test_id +
 		  " SET uses = $1 WHERE project = $2",[use+1,row.project]);
       rdata = { status: true,
+                title: "Show User Test",
 		project : row.project,
 		starturl : row.starturl,
 		task : row.task,
