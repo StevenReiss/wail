@@ -60,6 +60,7 @@ function handleShowPage(req,res,lesson)
    let u = req.body.name;
    let s = req.body.secret;
    let rdata = { firstname : u };
+   res.append("X-XSS-Protection","0")
    lesson.showPage(req,res,'xsslesson',rdata);
    lesson.enterGrade(req,res,lesson.lesson_id);
 }
